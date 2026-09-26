@@ -1,32 +1,24 @@
-"""FastAPI Server for Sentix AutoOps Incident Triage & Mitigation Engine."""
+"""FastAPI Log Ingestion Service.
 
-import os
-import uuid
-from datetime import datetime
-from dotenv import load_dotenv
+Receives enterprise logs, stores them directly into SQLite, and prints
+clean formatted output to the terminal.
+"""
+
+import json
+from typing import Dict, Any, Optional
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
+from pydantic import BaseModel, Field
 
-load_dotenv()
-
-from backend.schemas import (
-    RawLogInput,
-    IncidentRecord,
-    ApprovalRequest,
-)
-from backend.scenarios import SCENARIOS
-from backend.extractor import extract_telemetry
-from backend.jev_client import evaluate_system_one
-from backend.policy_engine import evaluate_policy_and_guardrails
-from backend.mitigation_store import store
+from backend.database import get_db_connection
 
 app = FastAPI(
-    title="Sentix AutoOps Engine",
-    description="Autonomous SecOps Triage & Blast-Radius Guardrails powered by TypeSafe Jev System-One",
+    title="Sentix Log Ingestion API",
+    description="High-speed ingestion receiver for enterprise security telemetry",
     version="1.0.0",
 )
 
-# Enable CORS for Streamlit / external clients
+# Enable CORS for Next.js (http://localhost:3000)
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -35,109 +27,143 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+# Ingestion Counter for Terminal Display
+ingestion_counter = 0
+
+
+class LogIngestPayload(BaseModel):
+    id: str
+    timestamp: str
+    user_id: str
+    source_system: str
+    event_type: str
+    client_ip: str
+    subnet_type: str
+    status: str  # 'SUCCESS', 'FAILURE', 'WARN'
+    failure_reason: Optional[str] = None
+    raw_payload: Dict[str, Any] = Field(default_factory=dict)
+
 
 @app.get("/")
 def health_check():
     return {
         "status": "healthy",
-        "service": "Sentix AutoOps Engine",
-        "timestamp": datetime.utcnow().isoformat() + "Z",
-        "jev_mode": "Live TypeSafe API" if os.getenv("TYPESAFE_API_KEY") else "Calibrated System-One Simulator",
-        "llm_mode": "Live OpenAI/Azure" if os.getenv("OPENAI_API_KEY") or os.getenv("AZURE_OPENAI_API_KEY") else "Deterministic Heuristic Extractor",
+        "service": "Sentix Ingestion API",
+        "mode": "Raw Ingestion & Storage",
     }
 
 
-@app.get("/api/scenarios")
-def get_scenarios():
-    return SCENARIOS
+@app.get("/api/topology")
+def get_topology():
+    """Returns static enterprise topology (users, servers, client devices, subnets)."""
+    conn = get_db_connection()
+    cursor = conn.cursor()
+
+    cursor.execute("SELECT * FROM users ORDER BY id;")
+    users = [dict(r) for r in cursor.fetchall()]
+
+    cursor.execute("SELECT * FROM infrastructure_nodes ORDER BY id;")
+    nodes = [dict(r) for r in cursor.fetchall()]
+
+    cursor.execute("SELECT * FROM client_devices ORDER BY id;")
+    devices = [dict(r) for r in cursor.fetchall()]
+
+    cursor.execute("SELECT * FROM network_subnets ORDER BY cidr;")
+    subnets = [dict(r) for r in cursor.fetchall()]
+
+    cursor.execute("SELECT COUNT(*) FROM logs;")
+    total_logs = cursor.fetchone()[0]
+
+    conn.close()
+
+    return {
+        "users": users,
+        "infrastructure_nodes": nodes,
+        "client_devices": devices,
+        "network_subnets": subnets,
+        "total_logs_stored": total_logs,
+    }
 
 
-@app.post("/api/incidents/analyze", response_model=IncidentRecord)
-def analyze_incident(payload: RawLogInput):
-    # If scenario_id is provided, populate log text from prebuilt scenarios
-    log_text = payload.log_text
-    source_system = payload.source_system
+@app.get("/api/logs")
+def get_logs(limit: int = 50, user_id: Optional[str] = None):
+    """Returns recent logs from SQLite."""
+    conn = get_db_connection()
+    cursor = conn.cursor()
 
-    if payload.scenario_id and payload.scenario_id in SCENARIOS:
-        scenario = SCENARIOS[payload.scenario_id]
-        log_text = scenario["log_text"]
-        source_system = scenario["source_system"]
+    query = "SELECT * FROM logs WHERE 1=1"
+    params = []
+    if user_id:
+        query += " AND user_id = ?"
+        params.append(user_id)
 
-    if not log_text.strip():
-        raise HTTPException(status_code=400, detail="Log content cannot be empty.")
+    query += " ORDER BY timestamp DESC LIMIT ?"
+    params.append(limit)
 
-    incident_id = f"INC-{uuid.uuid4().hex[:8].upper()}"
+    cursor.execute(query, params)
+    rows = []
+    for r in cursor.fetchall():
+        item = dict(r)
+        if isinstance(item.get("raw_payload"), str):
+            try:
+                item["raw_payload"] = json.loads(item["raw_payload"])
+            except Exception:
+                pass
+        rows.append(item)
 
-    # 1. Telemetry Extraction & Dynamic Tag Synthesis
-    telemetry = extract_telemetry(log_text, source_system)
+    conn.close()
+    return {"count": len(rows), "logs": rows}
 
-    # 2. TypeSafe Jev System-One Parallel Evaluation (Static + Dynamic Speculative)
-    jev_answers = evaluate_system_one(telemetry)
 
-    # 3. Policy Engine Evaluation with Blast-Radius Guardrails
-    policy = evaluate_policy_and_guardrails(telemetry, jev_answers)
+@app.post("/api/logs/ingest")
+def ingest_log(payload: LogIngestPayload):
+    """Receives a log event, persists it directly into SQLite, and logs to terminal."""
+    global ingestion_counter
+    ingestion_counter += 1
 
-    # 4. Determine initial execution state
-    if policy.recommended_action == "AUTO_MITIGATE":
-        initial_status = "AUTO_EXECUTED"
-        exec_result = {
-            "enforced": True,
-            "applied_at": datetime.utcnow().isoformat() + "Z",
-            "action": policy.drafted_mitigation.action_type,
-            "target": policy.drafted_mitigation.target,
-            "executor": "Sentix Autonomous Daemon (Zero-Touch)",
-            "message": "Temporary rate-limit applied successfully to WAF edge.",
-        }
-    elif policy.recommended_action == "DRAFT_AND_APPROVE":
-        initial_status = "PENDING_APPROVAL"
-        exec_result = None
-    else:
-        initial_status = "ESCALATED"
-        exec_result = {
-            "enforced": False,
-            "action": "DISPATCH_SOC_DIAGNOSTIC_PACKET",
-            "target": telemetry.target_user,
-            "executor": "Escalated to Tier-2 SecOps Threat Hunter",
-            "message": "Diagnostic bundle transmitted to SOC lead Slack/PagerDuty queue.",
-        }
+    conn = get_db_connection()
+    cursor = conn.cursor()
 
-    record = IncidentRecord(
-        incident_id=incident_id,
-        created_at=datetime.utcnow().isoformat() + "Z",
-        source_system=source_system,
-        status=initial_status,
-        raw_log=log_text,
-        telemetry=telemetry,
-        jev_answers=jev_answers,
-        policy=policy,
-        execution_result=exec_result,
+    try:
+        cursor.execute("""
+        INSERT INTO logs (id, timestamp, user_id, source_system, event_type, client_ip, subnet_type, status, failure_reason, raw_payload)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+        """, (
+            payload.id,
+            payload.timestamp,
+            payload.user_id,
+            payload.source_system,
+            payload.event_type,
+            payload.client_ip,
+            payload.subnet_type,
+            payload.status,
+            payload.failure_reason,
+            json.dumps(payload.raw_payload),
+        ))
+        conn.commit()
+    except Exception as e:
+        conn.close()
+        raise HTTPException(status_code=500, detail=f"Database write error: {e}")
+
+    conn.close()
+
+    # Formatted terminal print
+    status_tag = f"[{payload.status}]"
+    if payload.failure_reason:
+        status_tag += f" ({payload.failure_reason})"
+
+    print(
+        f"[INGESTED #{ingestion_counter:04d}] "
+        f"{payload.timestamp} | "
+        f"{payload.source_system:<22} | "
+        f"{payload.event_type:<24} | "
+        f"{payload.user_id:<10} | "
+        f"IP: {payload.client_ip:<15} ({payload.subnet_type}) | "
+        f"{status_tag}"
     )
 
-    return store.save_incident(record)
-
-
-@app.post("/api/mitigations/{incident_id}/approve", response_model=IncidentRecord)
-def approve_mitigation(incident_id: str, request: ApprovalRequest):
-    record = store.approve_incident(
-        incident_id=incident_id,
-        decision=request.decision,
-        notes=request.analyst_notes or "Approved via Cockpit",
-    )
-    if not record:
-        raise HTTPException(status_code=404, detail="Incident ID not found.")
-    return record
-
-
-@app.get("/api/incidents")
-def list_incidents():
-    return store.list_incidents()
-
-
-@app.get("/api/audit-log")
-def get_audit_log():
-    return store.audit_log
-
-
-@app.get("/api/kpis")
-def get_kpis():
-    return store.get_kpis()
+    return {
+        "status": "recorded",
+        "log_id": payload.id,
+        "ingested_count": ingestion_counter,
+    }

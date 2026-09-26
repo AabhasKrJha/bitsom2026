@@ -1,0 +1,1802 @@
+{
+  "class_1_executive_credential_stuffing": [
+    {
+      "id": "log_cfo_attack_001",
+      "timestamp": "2026-09-25 12:19:21",
+      "user_id": "u_ciso",
+      "source_system": "SAP S/4HANA / Okta",
+      "event_type": "user.authentication",
+      "client_ip": "198.51.100.42",
+      "subnet_type": "PARTNER_GATEWAY",
+      "status": "FAILURE",
+      "failure_reason": "INVALID_PASSWORD",
+      "raw_payload": {
+        "user_agent": "Python-urllib/3.11 AutomatedPenTest/2.4",
+        "attempt_seq": 1,
+        "velocity": "52_attempts_per_45_seconds",
+        "target_app": "SAP S/4HANA Finance Core",
+        "subnet_warning": "Subnet 198.51.100.0/24 hosts 18 active European B2B partner EDI channels",
+        "attack_class": "EXECUTIVE_CREDENTIAL_STUFFING"
+      }
+    },
+    {
+      "id": "log_cfo_attack_002",
+      "timestamp": "2026-09-25 12:19:22",
+      "user_id": "u_ciso",
+      "source_system": "SAP S/4HANA / Okta",
+      "event_type": "user.authentication",
+      "client_ip": "198.51.100.42",
+      "subnet_type": "PARTNER_GATEWAY",
+      "status": "FAILURE",
+      "failure_reason": "INVALID_PASSWORD",
+      "raw_payload": {
+        "user_agent": "Python-urllib/3.11 AutomatedPenTest/2.4",
+        "attempt_seq": 2,
+        "velocity": "52_attempts_per_45_seconds",
+        "target_app": "SAP S/4HANA Finance Core",
+        "subnet_warning": "Subnet 198.51.100.0/24 hosts 18 active European B2B partner EDI channels",
+        "attack_class": "EXECUTIVE_CREDENTIAL_STUFFING"
+      }
+    },
+    {
+      "id": "log_cfo_attack_003",
+      "timestamp": "2026-09-25 12:19:23",
+      "user_id": "u_ciso",
+      "source_system": "SAP S/4HANA / Okta",
+      "event_type": "user.authentication",
+      "client_ip": "198.51.100.42",
+      "subnet_type": "PARTNER_GATEWAY",
+      "status": "FAILURE",
+      "failure_reason": "INVALID_PASSWORD",
+      "raw_payload": {
+        "user_agent": "Python-urllib/3.11 AutomatedPenTest/2.4",
+        "attempt_seq": 3,
+        "velocity": "52_attempts_per_45_seconds",
+        "target_app": "SAP S/4HANA Finance Core",
+        "subnet_warning": "Subnet 198.51.100.0/24 hosts 18 active European B2B partner EDI channels",
+        "attack_class": "EXECUTIVE_CREDENTIAL_STUFFING"
+      }
+    },
+    {
+      "id": "log_cfo_attack_004",
+      "timestamp": "2026-09-25 12:19:24",
+      "user_id": "u_ciso",
+      "source_system": "SAP S/4HANA / Okta",
+      "event_type": "user.authentication",
+      "client_ip": "198.51.100.42",
+      "subnet_type": "PARTNER_GATEWAY",
+      "status": "FAILURE",
+      "failure_reason": "INVALID_PASSWORD",
+      "raw_payload": {
+        "user_agent": "Python-urllib/3.11 AutomatedPenTest/2.4",
+        "attempt_seq": 4,
+        "velocity": "52_attempts_per_45_seconds",
+        "target_app": "SAP S/4HANA Finance Core",
+        "subnet_warning": "Subnet 198.51.100.0/24 hosts 18 active European B2B partner EDI channels",
+        "attack_class": "EXECUTIVE_CREDENTIAL_STUFFING"
+      }
+    },
+    {
+      "id": "log_cfo_attack_005",
+      "timestamp": "2026-09-25 12:19:25",
+      "user_id": "u_ciso",
+      "source_system": "SAP S/4HANA / Okta",
+      "event_type": "user.authentication",
+      "client_ip": "198.51.100.42",
+      "subnet_type": "PARTNER_GATEWAY",
+      "status": "FAILURE",
+      "failure_reason": "INVALID_PASSWORD",
+      "raw_payload": {
+        "user_agent": "Python-urllib/3.11 AutomatedPenTest/2.4",
+        "attempt_seq": 5,
+        "velocity": "52_attempts_per_45_seconds",
+        "target_app": "SAP S/4HANA Finance Core",
+        "subnet_warning": "Subnet 198.51.100.0/24 hosts 18 active European B2B partner EDI channels",
+        "attack_class": "EXECUTIVE_CREDENTIAL_STUFFING"
+      }
+    },
+    {
+      "id": "log_cfo_attack_006",
+      "timestamp": "2026-09-25 12:19:25",
+      "user_id": "u_ciso",
+      "source_system": "SAP S/4HANA / Okta",
+      "event_type": "user.authentication",
+      "client_ip": "198.51.100.42",
+      "subnet_type": "PARTNER_GATEWAY",
+      "status": "FAILURE",
+      "failure_reason": "INVALID_PASSWORD",
+      "raw_payload": {
+        "user_agent": "Python-urllib/3.11 AutomatedPenTest/2.4",
+        "attempt_seq": 6,
+        "velocity": "52_attempts_per_45_seconds",
+        "target_app": "SAP S/4HANA Finance Core",
+        "subnet_warning": "Subnet 198.51.100.0/24 hosts 18 active European B2B partner EDI channels",
+        "attack_class": "EXECUTIVE_CREDENTIAL_STUFFING"
+      }
+    },
+    {
+      "id": "log_cfo_attack_007",
+      "timestamp": "2026-09-25 12:19:26",
+      "user_id": "u_ciso",
+      "source_system": "SAP S/4HANA / Okta",
+      "event_type": "user.authentication",
+      "client_ip": "198.51.100.42",
+      "subnet_type": "PARTNER_GATEWAY",
+      "status": "FAILURE",
+      "failure_reason": "INVALID_PASSWORD",
+      "raw_payload": {
+        "user_agent": "Python-urllib/3.11 AutomatedPenTest/2.4",
+        "attempt_seq": 7,
+        "velocity": "52_attempts_per_45_seconds",
+        "target_app": "SAP S/4HANA Finance Core",
+        "subnet_warning": "Subnet 198.51.100.0/24 hosts 18 active European B2B partner EDI channels",
+        "attack_class": "EXECUTIVE_CREDENTIAL_STUFFING"
+      }
+    },
+    {
+      "id": "log_cfo_attack_008",
+      "timestamp": "2026-09-25 12:19:27",
+      "user_id": "u_ciso",
+      "source_system": "SAP S/4HANA / Okta",
+      "event_type": "user.authentication",
+      "client_ip": "198.51.100.42",
+      "subnet_type": "PARTNER_GATEWAY",
+      "status": "FAILURE",
+      "failure_reason": "INVALID_PASSWORD",
+      "raw_payload": {
+        "user_agent": "Python-urllib/3.11 AutomatedPenTest/2.4",
+        "attempt_seq": 8,
+        "velocity": "52_attempts_per_45_seconds",
+        "target_app": "SAP S/4HANA Finance Core",
+        "subnet_warning": "Subnet 198.51.100.0/24 hosts 18 active European B2B partner EDI channels",
+        "attack_class": "EXECUTIVE_CREDENTIAL_STUFFING"
+      }
+    },
+    {
+      "id": "log_cfo_attack_009",
+      "timestamp": "2026-09-25 12:19:28",
+      "user_id": "u_ciso",
+      "source_system": "SAP S/4HANA / Okta",
+      "event_type": "user.authentication",
+      "client_ip": "198.51.100.42",
+      "subnet_type": "PARTNER_GATEWAY",
+      "status": "FAILURE",
+      "failure_reason": "INVALID_PASSWORD",
+      "raw_payload": {
+        "user_agent": "Python-urllib/3.11 AutomatedPenTest/2.4",
+        "attempt_seq": 9,
+        "velocity": "52_attempts_per_45_seconds",
+        "target_app": "SAP S/4HANA Finance Core",
+        "subnet_warning": "Subnet 198.51.100.0/24 hosts 18 active European B2B partner EDI channels",
+        "attack_class": "EXECUTIVE_CREDENTIAL_STUFFING"
+      }
+    },
+    {
+      "id": "log_cfo_attack_010",
+      "timestamp": "2026-09-25 12:19:29",
+      "user_id": "u_ciso",
+      "source_system": "SAP S/4HANA / Okta",
+      "event_type": "user.authentication",
+      "client_ip": "198.51.100.42",
+      "subnet_type": "PARTNER_GATEWAY",
+      "status": "FAILURE",
+      "failure_reason": "INVALID_PASSWORD",
+      "raw_payload": {
+        "user_agent": "Python-urllib/3.11 AutomatedPenTest/2.4",
+        "attempt_seq": 10,
+        "velocity": "52_attempts_per_45_seconds",
+        "target_app": "SAP S/4HANA Finance Core",
+        "subnet_warning": "Subnet 198.51.100.0/24 hosts 18 active European B2B partner EDI channels",
+        "attack_class": "EXECUTIVE_CREDENTIAL_STUFFING"
+      }
+    },
+    {
+      "id": "log_cfo_attack_011",
+      "timestamp": "2026-09-25 12:19:29",
+      "user_id": "u_ciso",
+      "source_system": "SAP S/4HANA / Okta",
+      "event_type": "user.authentication",
+      "client_ip": "198.51.100.42",
+      "subnet_type": "PARTNER_GATEWAY",
+      "status": "FAILURE",
+      "failure_reason": "INVALID_PASSWORD",
+      "raw_payload": {
+        "user_agent": "Python-urllib/3.11 AutomatedPenTest/2.4",
+        "attempt_seq": 11,
+        "velocity": "52_attempts_per_45_seconds",
+        "target_app": "SAP S/4HANA Finance Core",
+        "subnet_warning": "Subnet 198.51.100.0/24 hosts 18 active European B2B partner EDI channels",
+        "attack_class": "EXECUTIVE_CREDENTIAL_STUFFING"
+      }
+    },
+    {
+      "id": "log_cfo_attack_012",
+      "timestamp": "2026-09-25 12:19:30",
+      "user_id": "u_ciso",
+      "source_system": "SAP S/4HANA / Okta",
+      "event_type": "user.authentication",
+      "client_ip": "198.51.100.42",
+      "subnet_type": "PARTNER_GATEWAY",
+      "status": "FAILURE",
+      "failure_reason": "INVALID_PASSWORD",
+      "raw_payload": {
+        "user_agent": "Python-urllib/3.11 AutomatedPenTest/2.4",
+        "attempt_seq": 12,
+        "velocity": "52_attempts_per_45_seconds",
+        "target_app": "SAP S/4HANA Finance Core",
+        "subnet_warning": "Subnet 198.51.100.0/24 hosts 18 active European B2B partner EDI channels",
+        "attack_class": "EXECUTIVE_CREDENTIAL_STUFFING"
+      }
+    },
+    {
+      "id": "log_cfo_attack_013",
+      "timestamp": "2026-09-25 12:19:31",
+      "user_id": "u_ciso",
+      "source_system": "SAP S/4HANA / Okta",
+      "event_type": "user.authentication",
+      "client_ip": "198.51.100.42",
+      "subnet_type": "PARTNER_GATEWAY",
+      "status": "FAILURE",
+      "failure_reason": "INVALID_PASSWORD",
+      "raw_payload": {
+        "user_agent": "Python-urllib/3.11 AutomatedPenTest/2.4",
+        "attempt_seq": 13,
+        "velocity": "52_attempts_per_45_seconds",
+        "target_app": "SAP S/4HANA Finance Core",
+        "subnet_warning": "Subnet 198.51.100.0/24 hosts 18 active European B2B partner EDI channels",
+        "attack_class": "EXECUTIVE_CREDENTIAL_STUFFING"
+      }
+    },
+    {
+      "id": "log_cfo_attack_014",
+      "timestamp": "2026-09-25 12:19:32",
+      "user_id": "u_ciso",
+      "source_system": "SAP S/4HANA / Okta",
+      "event_type": "user.authentication",
+      "client_ip": "198.51.100.42",
+      "subnet_type": "PARTNER_GATEWAY",
+      "status": "FAILURE",
+      "failure_reason": "INVALID_PASSWORD",
+      "raw_payload": {
+        "user_agent": "Python-urllib/3.11 AutomatedPenTest/2.4",
+        "attempt_seq": 14,
+        "velocity": "52_attempts_per_45_seconds",
+        "target_app": "SAP S/4HANA Finance Core",
+        "subnet_warning": "Subnet 198.51.100.0/24 hosts 18 active European B2B partner EDI channels",
+        "attack_class": "EXECUTIVE_CREDENTIAL_STUFFING"
+      }
+    },
+    {
+      "id": "log_cfo_attack_015",
+      "timestamp": "2026-09-25 12:19:33",
+      "user_id": "u_ciso",
+      "source_system": "SAP S/4HANA / Okta",
+      "event_type": "user.authentication",
+      "client_ip": "198.51.100.42",
+      "subnet_type": "PARTNER_GATEWAY",
+      "status": "FAILURE",
+      "failure_reason": "INVALID_PASSWORD",
+      "raw_payload": {
+        "user_agent": "Python-urllib/3.11 AutomatedPenTest/2.4",
+        "attempt_seq": 15,
+        "velocity": "52_attempts_per_45_seconds",
+        "target_app": "SAP S/4HANA Finance Core",
+        "subnet_warning": "Subnet 198.51.100.0/24 hosts 18 active European B2B partner EDI channels",
+        "attack_class": "EXECUTIVE_CREDENTIAL_STUFFING"
+      }
+    },
+    {
+      "id": "log_cfo_attack_016",
+      "timestamp": "2026-09-25 12:19:33",
+      "user_id": "u_ciso",
+      "source_system": "SAP S/4HANA / Okta",
+      "event_type": "user.authentication",
+      "client_ip": "198.51.100.42",
+      "subnet_type": "PARTNER_GATEWAY",
+      "status": "FAILURE",
+      "failure_reason": "INVALID_PASSWORD",
+      "raw_payload": {
+        "user_agent": "Python-urllib/3.11 AutomatedPenTest/2.4",
+        "attempt_seq": 16,
+        "velocity": "52_attempts_per_45_seconds",
+        "target_app": "SAP S/4HANA Finance Core",
+        "subnet_warning": "Subnet 198.51.100.0/24 hosts 18 active European B2B partner EDI channels",
+        "attack_class": "EXECUTIVE_CREDENTIAL_STUFFING"
+      }
+    },
+    {
+      "id": "log_cfo_attack_017",
+      "timestamp": "2026-09-25 12:19:34",
+      "user_id": "u_ciso",
+      "source_system": "SAP S/4HANA / Okta",
+      "event_type": "user.authentication",
+      "client_ip": "198.51.100.42",
+      "subnet_type": "PARTNER_GATEWAY",
+      "status": "FAILURE",
+      "failure_reason": "INVALID_PASSWORD",
+      "raw_payload": {
+        "user_agent": "Python-urllib/3.11 AutomatedPenTest/2.4",
+        "attempt_seq": 17,
+        "velocity": "52_attempts_per_45_seconds",
+        "target_app": "SAP S/4HANA Finance Core",
+        "subnet_warning": "Subnet 198.51.100.0/24 hosts 18 active European B2B partner EDI channels",
+        "attack_class": "EXECUTIVE_CREDENTIAL_STUFFING"
+      }
+    },
+    {
+      "id": "log_cfo_attack_018",
+      "timestamp": "2026-09-25 12:19:35",
+      "user_id": "u_ciso",
+      "source_system": "SAP S/4HANA / Okta",
+      "event_type": "user.authentication",
+      "client_ip": "198.51.100.42",
+      "subnet_type": "PARTNER_GATEWAY",
+      "status": "FAILURE",
+      "failure_reason": "INVALID_PASSWORD",
+      "raw_payload": {
+        "user_agent": "Python-urllib/3.11 AutomatedPenTest/2.4",
+        "attempt_seq": 18,
+        "velocity": "52_attempts_per_45_seconds",
+        "target_app": "SAP S/4HANA Finance Core",
+        "subnet_warning": "Subnet 198.51.100.0/24 hosts 18 active European B2B partner EDI channels",
+        "attack_class": "EXECUTIVE_CREDENTIAL_STUFFING"
+      }
+    },
+    {
+      "id": "log_cfo_attack_019",
+      "timestamp": "2026-09-25 12:19:36",
+      "user_id": "u_ciso",
+      "source_system": "SAP S/4HANA / Okta",
+      "event_type": "user.authentication",
+      "client_ip": "198.51.100.42",
+      "subnet_type": "PARTNER_GATEWAY",
+      "status": "FAILURE",
+      "failure_reason": "INVALID_PASSWORD",
+      "raw_payload": {
+        "user_agent": "Python-urllib/3.11 AutomatedPenTest/2.4",
+        "attempt_seq": 19,
+        "velocity": "52_attempts_per_45_seconds",
+        "target_app": "SAP S/4HANA Finance Core",
+        "subnet_warning": "Subnet 198.51.100.0/24 hosts 18 active European B2B partner EDI channels",
+        "attack_class": "EXECUTIVE_CREDENTIAL_STUFFING"
+      }
+    },
+    {
+      "id": "log_cfo_attack_020",
+      "timestamp": "2026-09-25 12:19:37",
+      "user_id": "u_ciso",
+      "source_system": "SAP S/4HANA / Okta",
+      "event_type": "user.authentication",
+      "client_ip": "198.51.100.42",
+      "subnet_type": "PARTNER_GATEWAY",
+      "status": "FAILURE",
+      "failure_reason": "INVALID_PASSWORD",
+      "raw_payload": {
+        "user_agent": "Python-urllib/3.11 AutomatedPenTest/2.4",
+        "attempt_seq": 20,
+        "velocity": "52_attempts_per_45_seconds",
+        "target_app": "SAP S/4HANA Finance Core",
+        "subnet_warning": "Subnet 198.51.100.0/24 hosts 18 active European B2B partner EDI channels",
+        "attack_class": "EXECUTIVE_CREDENTIAL_STUFFING"
+      }
+    },
+    {
+      "id": "log_cfo_attack_021",
+      "timestamp": "2026-09-25 12:19:37",
+      "user_id": "u_ciso",
+      "source_system": "SAP S/4HANA / Okta",
+      "event_type": "user.authentication",
+      "client_ip": "198.51.100.42",
+      "subnet_type": "PARTNER_GATEWAY",
+      "status": "FAILURE",
+      "failure_reason": "INVALID_PASSWORD",
+      "raw_payload": {
+        "user_agent": "Python-urllib/3.11 AutomatedPenTest/2.4",
+        "attempt_seq": 21,
+        "velocity": "52_attempts_per_45_seconds",
+        "target_app": "SAP S/4HANA Finance Core",
+        "subnet_warning": "Subnet 198.51.100.0/24 hosts 18 active European B2B partner EDI channels",
+        "attack_class": "EXECUTIVE_CREDENTIAL_STUFFING"
+      }
+    },
+    {
+      "id": "log_cfo_attack_022",
+      "timestamp": "2026-09-25 12:19:38",
+      "user_id": "u_ciso",
+      "source_system": "SAP S/4HANA / Okta",
+      "event_type": "user.authentication",
+      "client_ip": "198.51.100.42",
+      "subnet_type": "PARTNER_GATEWAY",
+      "status": "FAILURE",
+      "failure_reason": "INVALID_PASSWORD",
+      "raw_payload": {
+        "user_agent": "Python-urllib/3.11 AutomatedPenTest/2.4",
+        "attempt_seq": 22,
+        "velocity": "52_attempts_per_45_seconds",
+        "target_app": "SAP S/4HANA Finance Core",
+        "subnet_warning": "Subnet 198.51.100.0/24 hosts 18 active European B2B partner EDI channels",
+        "attack_class": "EXECUTIVE_CREDENTIAL_STUFFING"
+      }
+    },
+    {
+      "id": "log_cfo_attack_023",
+      "timestamp": "2026-09-25 12:19:39",
+      "user_id": "u_ciso",
+      "source_system": "SAP S/4HANA / Okta",
+      "event_type": "user.authentication",
+      "client_ip": "198.51.100.42",
+      "subnet_type": "PARTNER_GATEWAY",
+      "status": "FAILURE",
+      "failure_reason": "INVALID_PASSWORD",
+      "raw_payload": {
+        "user_agent": "Python-urllib/3.11 AutomatedPenTest/2.4",
+        "attempt_seq": 23,
+        "velocity": "52_attempts_per_45_seconds",
+        "target_app": "SAP S/4HANA Finance Core",
+        "subnet_warning": "Subnet 198.51.100.0/24 hosts 18 active European B2B partner EDI channels",
+        "attack_class": "EXECUTIVE_CREDENTIAL_STUFFING"
+      }
+    },
+    {
+      "id": "log_cfo_attack_024",
+      "timestamp": "2026-09-25 12:19:40",
+      "user_id": "u_ciso",
+      "source_system": "SAP S/4HANA / Okta",
+      "event_type": "user.authentication",
+      "client_ip": "198.51.100.42",
+      "subnet_type": "PARTNER_GATEWAY",
+      "status": "FAILURE",
+      "failure_reason": "INVALID_PASSWORD",
+      "raw_payload": {
+        "user_agent": "Python-urllib/3.11 AutomatedPenTest/2.4",
+        "attempt_seq": 24,
+        "velocity": "52_attempts_per_45_seconds",
+        "target_app": "SAP S/4HANA Finance Core",
+        "subnet_warning": "Subnet 198.51.100.0/24 hosts 18 active European B2B partner EDI channels",
+        "attack_class": "EXECUTIVE_CREDENTIAL_STUFFING"
+      }
+    },
+    {
+      "id": "log_cfo_attack_025",
+      "timestamp": "2026-09-25 12:19:41",
+      "user_id": "u_ciso",
+      "source_system": "SAP S/4HANA / Okta",
+      "event_type": "user.authentication",
+      "client_ip": "198.51.100.42",
+      "subnet_type": "PARTNER_GATEWAY",
+      "status": "FAILURE",
+      "failure_reason": "INVALID_PASSWORD",
+      "raw_payload": {
+        "user_agent": "Python-urllib/3.11 AutomatedPenTest/2.4",
+        "attempt_seq": 25,
+        "velocity": "52_attempts_per_45_seconds",
+        "target_app": "SAP S/4HANA Finance Core",
+        "subnet_warning": "Subnet 198.51.100.0/24 hosts 18 active European B2B partner EDI channels",
+        "attack_class": "EXECUTIVE_CREDENTIAL_STUFFING"
+      }
+    },
+    {
+      "id": "log_cfo_attack_026",
+      "timestamp": "2026-09-25 12:19:41",
+      "user_id": "u_ciso",
+      "source_system": "SAP S/4HANA / Okta",
+      "event_type": "user.authentication",
+      "client_ip": "198.51.100.42",
+      "subnet_type": "PARTNER_GATEWAY",
+      "status": "FAILURE",
+      "failure_reason": "INVALID_PASSWORD",
+      "raw_payload": {
+        "user_agent": "Python-urllib/3.11 AutomatedPenTest/2.4",
+        "attempt_seq": 26,
+        "velocity": "52_attempts_per_45_seconds",
+        "target_app": "SAP S/4HANA Finance Core",
+        "subnet_warning": "Subnet 198.51.100.0/24 hosts 18 active European B2B partner EDI channels",
+        "attack_class": "EXECUTIVE_CREDENTIAL_STUFFING"
+      }
+    },
+    {
+      "id": "log_cfo_attack_027",
+      "timestamp": "2026-09-25 12:19:42",
+      "user_id": "u_ciso",
+      "source_system": "SAP S/4HANA / Okta",
+      "event_type": "user.authentication",
+      "client_ip": "198.51.100.42",
+      "subnet_type": "PARTNER_GATEWAY",
+      "status": "FAILURE",
+      "failure_reason": "INVALID_PASSWORD",
+      "raw_payload": {
+        "user_agent": "Python-urllib/3.11 AutomatedPenTest/2.4",
+        "attempt_seq": 27,
+        "velocity": "52_attempts_per_45_seconds",
+        "target_app": "SAP S/4HANA Finance Core",
+        "subnet_warning": "Subnet 198.51.100.0/24 hosts 18 active European B2B partner EDI channels",
+        "attack_class": "EXECUTIVE_CREDENTIAL_STUFFING"
+      }
+    },
+    {
+      "id": "log_cfo_attack_028",
+      "timestamp": "2026-09-25 12:19:43",
+      "user_id": "u_ciso",
+      "source_system": "SAP S/4HANA / Okta",
+      "event_type": "user.authentication",
+      "client_ip": "198.51.100.42",
+      "subnet_type": "PARTNER_GATEWAY",
+      "status": "FAILURE",
+      "failure_reason": "INVALID_PASSWORD",
+      "raw_payload": {
+        "user_agent": "Python-urllib/3.11 AutomatedPenTest/2.4",
+        "attempt_seq": 28,
+        "velocity": "52_attempts_per_45_seconds",
+        "target_app": "SAP S/4HANA Finance Core",
+        "subnet_warning": "Subnet 198.51.100.0/24 hosts 18 active European B2B partner EDI channels",
+        "attack_class": "EXECUTIVE_CREDENTIAL_STUFFING"
+      }
+    },
+    {
+      "id": "log_cfo_attack_029",
+      "timestamp": "2026-09-25 12:19:44",
+      "user_id": "u_ciso",
+      "source_system": "SAP S/4HANA / Okta",
+      "event_type": "user.authentication",
+      "client_ip": "198.51.100.42",
+      "subnet_type": "PARTNER_GATEWAY",
+      "status": "FAILURE",
+      "failure_reason": "INVALID_PASSWORD",
+      "raw_payload": {
+        "user_agent": "Python-urllib/3.11 AutomatedPenTest/2.4",
+        "attempt_seq": 29,
+        "velocity": "52_attempts_per_45_seconds",
+        "target_app": "SAP S/4HANA Finance Core",
+        "subnet_warning": "Subnet 198.51.100.0/24 hosts 18 active European B2B partner EDI channels",
+        "attack_class": "EXECUTIVE_CREDENTIAL_STUFFING"
+      }
+    },
+    {
+      "id": "log_cfo_attack_030",
+      "timestamp": "2026-09-25 12:19:45",
+      "user_id": "u_ciso",
+      "source_system": "SAP S/4HANA / Okta",
+      "event_type": "user.authentication",
+      "client_ip": "198.51.100.42",
+      "subnet_type": "PARTNER_GATEWAY",
+      "status": "FAILURE",
+      "failure_reason": "INVALID_PASSWORD",
+      "raw_payload": {
+        "user_agent": "Python-urllib/3.11 AutomatedPenTest/2.4",
+        "attempt_seq": 30,
+        "velocity": "52_attempts_per_45_seconds",
+        "target_app": "SAP S/4HANA Finance Core",
+        "subnet_warning": "Subnet 198.51.100.0/24 hosts 18 active European B2B partner EDI channels",
+        "attack_class": "EXECUTIVE_CREDENTIAL_STUFFING"
+      }
+    },
+    {
+      "id": "log_cfo_attack_031",
+      "timestamp": "2026-09-25 12:19:45",
+      "user_id": "u_ciso",
+      "source_system": "SAP S/4HANA / Okta",
+      "event_type": "user.authentication",
+      "client_ip": "198.51.100.42",
+      "subnet_type": "PARTNER_GATEWAY",
+      "status": "FAILURE",
+      "failure_reason": "INVALID_PASSWORD",
+      "raw_payload": {
+        "user_agent": "Python-urllib/3.11 AutomatedPenTest/2.4",
+        "attempt_seq": 31,
+        "velocity": "52_attempts_per_45_seconds",
+        "target_app": "SAP S/4HANA Finance Core",
+        "subnet_warning": "Subnet 198.51.100.0/24 hosts 18 active European B2B partner EDI channels",
+        "attack_class": "EXECUTIVE_CREDENTIAL_STUFFING"
+      }
+    },
+    {
+      "id": "log_cfo_attack_032",
+      "timestamp": "2026-09-25 12:19:46",
+      "user_id": "u_ciso",
+      "source_system": "SAP S/4HANA / Okta",
+      "event_type": "user.authentication",
+      "client_ip": "198.51.100.42",
+      "subnet_type": "PARTNER_GATEWAY",
+      "status": "FAILURE",
+      "failure_reason": "INVALID_PASSWORD",
+      "raw_payload": {
+        "user_agent": "Python-urllib/3.11 AutomatedPenTest/2.4",
+        "attempt_seq": 32,
+        "velocity": "52_attempts_per_45_seconds",
+        "target_app": "SAP S/4HANA Finance Core",
+        "subnet_warning": "Subnet 198.51.100.0/24 hosts 18 active European B2B partner EDI channels",
+        "attack_class": "EXECUTIVE_CREDENTIAL_STUFFING"
+      }
+    },
+    {
+      "id": "log_cfo_attack_033",
+      "timestamp": "2026-09-25 12:19:47",
+      "user_id": "u_ciso",
+      "source_system": "SAP S/4HANA / Okta",
+      "event_type": "user.authentication",
+      "client_ip": "198.51.100.42",
+      "subnet_type": "PARTNER_GATEWAY",
+      "status": "FAILURE",
+      "failure_reason": "INVALID_PASSWORD",
+      "raw_payload": {
+        "user_agent": "Python-urllib/3.11 AutomatedPenTest/2.4",
+        "attempt_seq": 33,
+        "velocity": "52_attempts_per_45_seconds",
+        "target_app": "SAP S/4HANA Finance Core",
+        "subnet_warning": "Subnet 198.51.100.0/24 hosts 18 active European B2B partner EDI channels",
+        "attack_class": "EXECUTIVE_CREDENTIAL_STUFFING"
+      }
+    },
+    {
+      "id": "log_cfo_attack_034",
+      "timestamp": "2026-09-25 12:19:48",
+      "user_id": "u_ciso",
+      "source_system": "SAP S/4HANA / Okta",
+      "event_type": "user.authentication",
+      "client_ip": "198.51.100.42",
+      "subnet_type": "PARTNER_GATEWAY",
+      "status": "FAILURE",
+      "failure_reason": "INVALID_PASSWORD",
+      "raw_payload": {
+        "user_agent": "Python-urllib/3.11 AutomatedPenTest/2.4",
+        "attempt_seq": 34,
+        "velocity": "52_attempts_per_45_seconds",
+        "target_app": "SAP S/4HANA Finance Core",
+        "subnet_warning": "Subnet 198.51.100.0/24 hosts 18 active European B2B partner EDI channels",
+        "attack_class": "EXECUTIVE_CREDENTIAL_STUFFING"
+      }
+    },
+    {
+      "id": "log_cfo_attack_035",
+      "timestamp": "2026-09-25 12:19:49",
+      "user_id": "u_ciso",
+      "source_system": "SAP S/4HANA / Okta",
+      "event_type": "user.authentication",
+      "client_ip": "198.51.100.42",
+      "subnet_type": "PARTNER_GATEWAY",
+      "status": "FAILURE",
+      "failure_reason": "INVALID_PASSWORD",
+      "raw_payload": {
+        "user_agent": "Python-urllib/3.11 AutomatedPenTest/2.4",
+        "attempt_seq": 35,
+        "velocity": "52_attempts_per_45_seconds",
+        "target_app": "SAP S/4HANA Finance Core",
+        "subnet_warning": "Subnet 198.51.100.0/24 hosts 18 active European B2B partner EDI channels",
+        "attack_class": "EXECUTIVE_CREDENTIAL_STUFFING"
+      }
+    },
+    {
+      "id": "log_cfo_attack_036",
+      "timestamp": "2026-09-25 12:19:49",
+      "user_id": "u_ciso",
+      "source_system": "SAP S/4HANA / Okta",
+      "event_type": "user.authentication",
+      "client_ip": "198.51.100.42",
+      "subnet_type": "PARTNER_GATEWAY",
+      "status": "FAILURE",
+      "failure_reason": "INVALID_PASSWORD",
+      "raw_payload": {
+        "user_agent": "Python-urllib/3.11 AutomatedPenTest/2.4",
+        "attempt_seq": 36,
+        "velocity": "52_attempts_per_45_seconds",
+        "target_app": "SAP S/4HANA Finance Core",
+        "subnet_warning": "Subnet 198.51.100.0/24 hosts 18 active European B2B partner EDI channels",
+        "attack_class": "EXECUTIVE_CREDENTIAL_STUFFING"
+      }
+    },
+    {
+      "id": "log_cfo_attack_037",
+      "timestamp": "2026-09-25 12:19:50",
+      "user_id": "u_ciso",
+      "source_system": "SAP S/4HANA / Okta",
+      "event_type": "user.authentication",
+      "client_ip": "198.51.100.42",
+      "subnet_type": "PARTNER_GATEWAY",
+      "status": "FAILURE",
+      "failure_reason": "INVALID_PASSWORD",
+      "raw_payload": {
+        "user_agent": "Python-urllib/3.11 AutomatedPenTest/2.4",
+        "attempt_seq": 37,
+        "velocity": "52_attempts_per_45_seconds",
+        "target_app": "SAP S/4HANA Finance Core",
+        "subnet_warning": "Subnet 198.51.100.0/24 hosts 18 active European B2B partner EDI channels",
+        "attack_class": "EXECUTIVE_CREDENTIAL_STUFFING"
+      }
+    },
+    {
+      "id": "log_cfo_attack_038",
+      "timestamp": "2026-09-25 12:19:51",
+      "user_id": "u_ciso",
+      "source_system": "SAP S/4HANA / Okta",
+      "event_type": "user.authentication",
+      "client_ip": "198.51.100.42",
+      "subnet_type": "PARTNER_GATEWAY",
+      "status": "FAILURE",
+      "failure_reason": "INVALID_PASSWORD",
+      "raw_payload": {
+        "user_agent": "Python-urllib/3.11 AutomatedPenTest/2.4",
+        "attempt_seq": 38,
+        "velocity": "52_attempts_per_45_seconds",
+        "target_app": "SAP S/4HANA Finance Core",
+        "subnet_warning": "Subnet 198.51.100.0/24 hosts 18 active European B2B partner EDI channels",
+        "attack_class": "EXECUTIVE_CREDENTIAL_STUFFING"
+      }
+    },
+    {
+      "id": "log_cfo_attack_039",
+      "timestamp": "2026-09-25 12:19:52",
+      "user_id": "u_ciso",
+      "source_system": "SAP S/4HANA / Okta",
+      "event_type": "user.authentication",
+      "client_ip": "198.51.100.42",
+      "subnet_type": "PARTNER_GATEWAY",
+      "status": "FAILURE",
+      "failure_reason": "INVALID_PASSWORD",
+      "raw_payload": {
+        "user_agent": "Python-urllib/3.11 AutomatedPenTest/2.4",
+        "attempt_seq": 39,
+        "velocity": "52_attempts_per_45_seconds",
+        "target_app": "SAP S/4HANA Finance Core",
+        "subnet_warning": "Subnet 198.51.100.0/24 hosts 18 active European B2B partner EDI channels",
+        "attack_class": "EXECUTIVE_CREDENTIAL_STUFFING"
+      }
+    },
+    {
+      "id": "log_cfo_attack_040",
+      "timestamp": "2026-09-25 12:19:53",
+      "user_id": "u_ciso",
+      "source_system": "SAP S/4HANA / Okta",
+      "event_type": "user.authentication",
+      "client_ip": "198.51.100.42",
+      "subnet_type": "PARTNER_GATEWAY",
+      "status": "FAILURE",
+      "failure_reason": "INVALID_PASSWORD",
+      "raw_payload": {
+        "user_agent": "Python-urllib/3.11 AutomatedPenTest/2.4",
+        "attempt_seq": 40,
+        "velocity": "52_attempts_per_45_seconds",
+        "target_app": "SAP S/4HANA Finance Core",
+        "subnet_warning": "Subnet 198.51.100.0/24 hosts 18 active European B2B partner EDI channels",
+        "attack_class": "EXECUTIVE_CREDENTIAL_STUFFING"
+      }
+    },
+    {
+      "id": "log_cfo_attack_041",
+      "timestamp": "2026-09-25 12:19:53",
+      "user_id": "u_ciso",
+      "source_system": "SAP S/4HANA / Okta",
+      "event_type": "user.authentication",
+      "client_ip": "198.51.100.42",
+      "subnet_type": "PARTNER_GATEWAY",
+      "status": "FAILURE",
+      "failure_reason": "INVALID_PASSWORD",
+      "raw_payload": {
+        "user_agent": "Python-urllib/3.11 AutomatedPenTest/2.4",
+        "attempt_seq": 41,
+        "velocity": "52_attempts_per_45_seconds",
+        "target_app": "SAP S/4HANA Finance Core",
+        "subnet_warning": "Subnet 198.51.100.0/24 hosts 18 active European B2B partner EDI channels",
+        "attack_class": "EXECUTIVE_CREDENTIAL_STUFFING"
+      }
+    },
+    {
+      "id": "log_cfo_attack_042",
+      "timestamp": "2026-09-25 12:19:54",
+      "user_id": "u_ciso",
+      "source_system": "SAP S/4HANA / Okta",
+      "event_type": "user.authentication",
+      "client_ip": "198.51.100.42",
+      "subnet_type": "PARTNER_GATEWAY",
+      "status": "FAILURE",
+      "failure_reason": "INVALID_PASSWORD",
+      "raw_payload": {
+        "user_agent": "Python-urllib/3.11 AutomatedPenTest/2.4",
+        "attempt_seq": 42,
+        "velocity": "52_attempts_per_45_seconds",
+        "target_app": "SAP S/4HANA Finance Core",
+        "subnet_warning": "Subnet 198.51.100.0/24 hosts 18 active European B2B partner EDI channels",
+        "attack_class": "EXECUTIVE_CREDENTIAL_STUFFING"
+      }
+    },
+    {
+      "id": "log_cfo_attack_043",
+      "timestamp": "2026-09-25 12:19:55",
+      "user_id": "u_ciso",
+      "source_system": "SAP S/4HANA / Okta",
+      "event_type": "user.authentication",
+      "client_ip": "198.51.100.42",
+      "subnet_type": "PARTNER_GATEWAY",
+      "status": "FAILURE",
+      "failure_reason": "INVALID_PASSWORD",
+      "raw_payload": {
+        "user_agent": "Python-urllib/3.11 AutomatedPenTest/2.4",
+        "attempt_seq": 43,
+        "velocity": "52_attempts_per_45_seconds",
+        "target_app": "SAP S/4HANA Finance Core",
+        "subnet_warning": "Subnet 198.51.100.0/24 hosts 18 active European B2B partner EDI channels",
+        "attack_class": "EXECUTIVE_CREDENTIAL_STUFFING"
+      }
+    },
+    {
+      "id": "log_cfo_attack_044",
+      "timestamp": "2026-09-25 12:19:56",
+      "user_id": "u_ciso",
+      "source_system": "SAP S/4HANA / Okta",
+      "event_type": "user.authentication",
+      "client_ip": "198.51.100.42",
+      "subnet_type": "PARTNER_GATEWAY",
+      "status": "FAILURE",
+      "failure_reason": "INVALID_PASSWORD",
+      "raw_payload": {
+        "user_agent": "Python-urllib/3.11 AutomatedPenTest/2.4",
+        "attempt_seq": 44,
+        "velocity": "52_attempts_per_45_seconds",
+        "target_app": "SAP S/4HANA Finance Core",
+        "subnet_warning": "Subnet 198.51.100.0/24 hosts 18 active European B2B partner EDI channels",
+        "attack_class": "EXECUTIVE_CREDENTIAL_STUFFING"
+      }
+    },
+    {
+      "id": "log_cfo_attack_045",
+      "timestamp": "2026-09-25 12:19:57",
+      "user_id": "u_ciso",
+      "source_system": "SAP S/4HANA / Okta",
+      "event_type": "user.authentication",
+      "client_ip": "198.51.100.42",
+      "subnet_type": "PARTNER_GATEWAY",
+      "status": "FAILURE",
+      "failure_reason": "INVALID_PASSWORD",
+      "raw_payload": {
+        "user_agent": "Python-urllib/3.11 AutomatedPenTest/2.4",
+        "attempt_seq": 45,
+        "velocity": "52_attempts_per_45_seconds",
+        "target_app": "SAP S/4HANA Finance Core",
+        "subnet_warning": "Subnet 198.51.100.0/24 hosts 18 active European B2B partner EDI channels",
+        "attack_class": "EXECUTIVE_CREDENTIAL_STUFFING"
+      }
+    },
+    {
+      "id": "log_cfo_attack_046",
+      "timestamp": "2026-09-25 12:19:57",
+      "user_id": "u_ciso",
+      "source_system": "SAP S/4HANA / Okta",
+      "event_type": "user.authentication",
+      "client_ip": "198.51.100.42",
+      "subnet_type": "PARTNER_GATEWAY",
+      "status": "FAILURE",
+      "failure_reason": "INVALID_PASSWORD",
+      "raw_payload": {
+        "user_agent": "Python-urllib/3.11 AutomatedPenTest/2.4",
+        "attempt_seq": 46,
+        "velocity": "52_attempts_per_45_seconds",
+        "target_app": "SAP S/4HANA Finance Core",
+        "subnet_warning": "Subnet 198.51.100.0/24 hosts 18 active European B2B partner EDI channels",
+        "attack_class": "EXECUTIVE_CREDENTIAL_STUFFING"
+      }
+    },
+    {
+      "id": "log_cfo_attack_047",
+      "timestamp": "2026-09-25 12:19:58",
+      "user_id": "u_ciso",
+      "source_system": "SAP S/4HANA / Okta",
+      "event_type": "user.authentication",
+      "client_ip": "198.51.100.42",
+      "subnet_type": "PARTNER_GATEWAY",
+      "status": "FAILURE",
+      "failure_reason": "INVALID_PASSWORD",
+      "raw_payload": {
+        "user_agent": "Python-urllib/3.11 AutomatedPenTest/2.4",
+        "attempt_seq": 47,
+        "velocity": "52_attempts_per_45_seconds",
+        "target_app": "SAP S/4HANA Finance Core",
+        "subnet_warning": "Subnet 198.51.100.0/24 hosts 18 active European B2B partner EDI channels",
+        "attack_class": "EXECUTIVE_CREDENTIAL_STUFFING"
+      }
+    },
+    {
+      "id": "log_cfo_attack_048",
+      "timestamp": "2026-09-25 12:19:59",
+      "user_id": "u_ciso",
+      "source_system": "SAP S/4HANA / Okta",
+      "event_type": "user.authentication",
+      "client_ip": "198.51.100.42",
+      "subnet_type": "PARTNER_GATEWAY",
+      "status": "FAILURE",
+      "failure_reason": "INVALID_PASSWORD",
+      "raw_payload": {
+        "user_agent": "Python-urllib/3.11 AutomatedPenTest/2.4",
+        "attempt_seq": 48,
+        "velocity": "52_attempts_per_45_seconds",
+        "target_app": "SAP S/4HANA Finance Core",
+        "subnet_warning": "Subnet 198.51.100.0/24 hosts 18 active European B2B partner EDI channels",
+        "attack_class": "EXECUTIVE_CREDENTIAL_STUFFING"
+      }
+    },
+    {
+      "id": "log_cfo_attack_049",
+      "timestamp": "2026-09-25 12:20:00",
+      "user_id": "u_ciso",
+      "source_system": "SAP S/4HANA / Okta",
+      "event_type": "user.authentication",
+      "client_ip": "198.51.100.42",
+      "subnet_type": "PARTNER_GATEWAY",
+      "status": "FAILURE",
+      "failure_reason": "INVALID_PASSWORD",
+      "raw_payload": {
+        "user_agent": "Python-urllib/3.11 AutomatedPenTest/2.4",
+        "attempt_seq": 49,
+        "velocity": "52_attempts_per_45_seconds",
+        "target_app": "SAP S/4HANA Finance Core",
+        "subnet_warning": "Subnet 198.51.100.0/24 hosts 18 active European B2B partner EDI channels",
+        "attack_class": "EXECUTIVE_CREDENTIAL_STUFFING"
+      }
+    },
+    {
+      "id": "log_cfo_attack_050",
+      "timestamp": "2026-09-25 12:20:01",
+      "user_id": "u_ciso",
+      "source_system": "SAP S/4HANA / Okta",
+      "event_type": "user.authentication",
+      "client_ip": "198.51.100.42",
+      "subnet_type": "PARTNER_GATEWAY",
+      "status": "FAILURE",
+      "failure_reason": "INVALID_PASSWORD",
+      "raw_payload": {
+        "user_agent": "Python-urllib/3.11 AutomatedPenTest/2.4",
+        "attempt_seq": 50,
+        "velocity": "52_attempts_per_45_seconds",
+        "target_app": "SAP S/4HANA Finance Core",
+        "subnet_warning": "Subnet 198.51.100.0/24 hosts 18 active European B2B partner EDI channels",
+        "attack_class": "EXECUTIVE_CREDENTIAL_STUFFING"
+      }
+    },
+    {
+      "id": "log_cfo_attack_051",
+      "timestamp": "2026-09-25 12:20:01",
+      "user_id": "u_ciso",
+      "source_system": "SAP S/4HANA / Okta",
+      "event_type": "user.authentication",
+      "client_ip": "198.51.100.42",
+      "subnet_type": "PARTNER_GATEWAY",
+      "status": "FAILURE",
+      "failure_reason": "INVALID_PASSWORD",
+      "raw_payload": {
+        "user_agent": "Python-urllib/3.11 AutomatedPenTest/2.4",
+        "attempt_seq": 51,
+        "velocity": "52_attempts_per_45_seconds",
+        "target_app": "SAP S/4HANA Finance Core",
+        "subnet_warning": "Subnet 198.51.100.0/24 hosts 18 active European B2B partner EDI channels",
+        "attack_class": "EXECUTIVE_CREDENTIAL_STUFFING"
+      }
+    },
+    {
+      "id": "log_cfo_attack_052",
+      "timestamp": "2026-09-25 12:20:02",
+      "user_id": "u_ciso",
+      "source_system": "SAP S/4HANA / Okta",
+      "event_type": "user.authentication",
+      "client_ip": "198.51.100.42",
+      "subnet_type": "PARTNER_GATEWAY",
+      "status": "FAILURE",
+      "failure_reason": "INVALID_PASSWORD",
+      "raw_payload": {
+        "user_agent": "Python-urllib/3.11 AutomatedPenTest/2.4",
+        "attempt_seq": 52,
+        "velocity": "52_attempts_per_45_seconds",
+        "target_app": "SAP S/4HANA Finance Core",
+        "subnet_warning": "Subnet 198.51.100.0/24 hosts 18 active European B2B partner EDI channels",
+        "attack_class": "EXECUTIVE_CREDENTIAL_STUFFING"
+      }
+    }
+  ],
+  "class_2_privileged_db_assume_role": [
+    {
+      "id": "log_cto_assume_role_001",
+      "timestamp": "2026-09-26 08:46:25",
+      "user_id": "u_cto",
+      "source_system": "AWS CloudTrail / IAM",
+      "event_type": "sts:AssumeRole",
+      "client_ip": "45.33.32.18",
+      "subnet_type": "DATACENTER_PROXY",
+      "status": "FAILURE",
+      "failure_reason": "MFA_CHALLENGE_FAILED",
+      "raw_payload": {
+        "target_role": "arn:aws:iam::112233445566:role/DatabaseClusterSuperAdmin",
+        "session_name": "emergency_breakglass_probe",
+        "mfa_serial": "arn:aws:iam::112233445566:mfa/david.kim",
+        "attack_class": "PRIVILEGE_ESCALATION_ASSUME_ROLE"
+      }
+    },
+    {
+      "id": "log_cto_assume_role_002",
+      "timestamp": "2026-09-26 08:46:29",
+      "user_id": "u_cto",
+      "source_system": "AWS CloudTrail / IAM",
+      "event_type": "sts:AssumeRole",
+      "client_ip": "45.33.32.18",
+      "subnet_type": "DATACENTER_PROXY",
+      "status": "FAILURE",
+      "failure_reason": "MFA_CHALLENGE_FAILED",
+      "raw_payload": {
+        "target_role": "arn:aws:iam::112233445566:role/DatabaseClusterSuperAdmin",
+        "session_name": "emergency_breakglass_probe",
+        "mfa_serial": "arn:aws:iam::112233445566:mfa/david.kim",
+        "attack_class": "PRIVILEGE_ESCALATION_ASSUME_ROLE"
+      }
+    },
+    {
+      "id": "log_cto_assume_role_003",
+      "timestamp": "2026-09-26 08:46:33",
+      "user_id": "u_cto",
+      "source_system": "AWS CloudTrail / IAM",
+      "event_type": "sts:AssumeRole",
+      "client_ip": "45.33.32.18",
+      "subnet_type": "DATACENTER_PROXY",
+      "status": "FAILURE",
+      "failure_reason": "MFA_CHALLENGE_FAILED",
+      "raw_payload": {
+        "target_role": "arn:aws:iam::112233445566:role/DatabaseClusterSuperAdmin",
+        "session_name": "emergency_breakglass_probe",
+        "mfa_serial": "arn:aws:iam::112233445566:mfa/david.kim",
+        "attack_class": "PRIVILEGE_ESCALATION_ASSUME_ROLE"
+      }
+    },
+    {
+      "id": "log_cto_assume_role_004",
+      "timestamp": "2026-09-26 08:46:37",
+      "user_id": "u_cto",
+      "source_system": "AWS CloudTrail / IAM",
+      "event_type": "sts:AssumeRole",
+      "client_ip": "45.33.32.18",
+      "subnet_type": "DATACENTER_PROXY",
+      "status": "FAILURE",
+      "failure_reason": "MFA_CHALLENGE_FAILED",
+      "raw_payload": {
+        "target_role": "arn:aws:iam::112233445566:role/DatabaseClusterSuperAdmin",
+        "session_name": "emergency_breakglass_probe",
+        "mfa_serial": "arn:aws:iam::112233445566:mfa/david.kim",
+        "attack_class": "PRIVILEGE_ESCALATION_ASSUME_ROLE"
+      }
+    },
+    {
+      "id": "log_cto_assume_role_005",
+      "timestamp": "2026-09-26 08:46:41",
+      "user_id": "u_cto",
+      "source_system": "AWS CloudTrail / IAM",
+      "event_type": "sts:AssumeRole",
+      "client_ip": "45.33.32.18",
+      "subnet_type": "DATACENTER_PROXY",
+      "status": "FAILURE",
+      "failure_reason": "MFA_CHALLENGE_FAILED",
+      "raw_payload": {
+        "target_role": "arn:aws:iam::112233445566:role/DatabaseClusterSuperAdmin",
+        "session_name": "emergency_breakglass_probe",
+        "mfa_serial": "arn:aws:iam::112233445566:mfa/david.kim",
+        "attack_class": "PRIVILEGE_ESCALATION_ASSUME_ROLE"
+      }
+    },
+    {
+      "id": "log_cto_assume_role_006",
+      "timestamp": "2026-09-26 08:46:45",
+      "user_id": "u_cto",
+      "source_system": "AWS CloudTrail / IAM",
+      "event_type": "sts:AssumeRole",
+      "client_ip": "45.33.32.18",
+      "subnet_type": "DATACENTER_PROXY",
+      "status": "FAILURE",
+      "failure_reason": "MFA_CHALLENGE_FAILED",
+      "raw_payload": {
+        "target_role": "arn:aws:iam::112233445566:role/DatabaseClusterSuperAdmin",
+        "session_name": "emergency_breakglass_probe",
+        "mfa_serial": "arn:aws:iam::112233445566:mfa/david.kim",
+        "attack_class": "PRIVILEGE_ESCALATION_ASSUME_ROLE"
+      }
+    },
+    {
+      "id": "log_cto_assume_role_007",
+      "timestamp": "2026-09-26 08:46:49",
+      "user_id": "u_cto",
+      "source_system": "AWS CloudTrail / IAM",
+      "event_type": "sts:AssumeRole",
+      "client_ip": "45.33.32.18",
+      "subnet_type": "DATACENTER_PROXY",
+      "status": "FAILURE",
+      "failure_reason": "MFA_CHALLENGE_FAILED",
+      "raw_payload": {
+        "target_role": "arn:aws:iam::112233445566:role/DatabaseClusterSuperAdmin",
+        "session_name": "emergency_breakglass_probe",
+        "mfa_serial": "arn:aws:iam::112233445566:mfa/david.kim",
+        "attack_class": "PRIVILEGE_ESCALATION_ASSUME_ROLE"
+      }
+    },
+    {
+      "id": "log_cto_assume_role_008",
+      "timestamp": "2026-09-26 08:46:53",
+      "user_id": "u_cto",
+      "source_system": "AWS CloudTrail / IAM",
+      "event_type": "sts:AssumeRole",
+      "client_ip": "45.33.32.18",
+      "subnet_type": "DATACENTER_PROXY",
+      "status": "FAILURE",
+      "failure_reason": "MFA_CHALLENGE_FAILED",
+      "raw_payload": {
+        "target_role": "arn:aws:iam::112233445566:role/DatabaseClusterSuperAdmin",
+        "session_name": "emergency_breakglass_probe",
+        "mfa_serial": "arn:aws:iam::112233445566:mfa/david.kim",
+        "attack_class": "PRIVILEGE_ESCALATION_ASSUME_ROLE"
+      }
+    },
+    {
+      "id": "log_cto_assume_role_009",
+      "timestamp": "2026-09-26 08:46:57",
+      "user_id": "u_cto",
+      "source_system": "AWS CloudTrail / IAM",
+      "event_type": "sts:AssumeRole",
+      "client_ip": "45.33.32.18",
+      "subnet_type": "DATACENTER_PROXY",
+      "status": "FAILURE",
+      "failure_reason": "MFA_CHALLENGE_FAILED",
+      "raw_payload": {
+        "target_role": "arn:aws:iam::112233445566:role/DatabaseClusterSuperAdmin",
+        "session_name": "emergency_breakglass_probe",
+        "mfa_serial": "arn:aws:iam::112233445566:mfa/david.kim",
+        "attack_class": "PRIVILEGE_ESCALATION_ASSUME_ROLE"
+      }
+    },
+    {
+      "id": "log_cto_assume_role_010",
+      "timestamp": "2026-09-26 08:47:01",
+      "user_id": "u_cto",
+      "source_system": "AWS CloudTrail / IAM",
+      "event_type": "sts:AssumeRole",
+      "client_ip": "45.33.32.18",
+      "subnet_type": "DATACENTER_PROXY",
+      "status": "FAILURE",
+      "failure_reason": "MFA_CHALLENGE_FAILED",
+      "raw_payload": {
+        "target_role": "arn:aws:iam::112233445566:role/DatabaseClusterSuperAdmin",
+        "session_name": "emergency_breakglass_probe",
+        "mfa_serial": "arn:aws:iam::112233445566:mfa/david.kim",
+        "attack_class": "PRIVILEGE_ESCALATION_ASSUME_ROLE"
+      }
+    },
+    {
+      "id": "log_cto_assume_role_011",
+      "timestamp": "2026-09-26 08:47:05",
+      "user_id": "u_cto",
+      "source_system": "AWS CloudTrail / IAM",
+      "event_type": "sts:AssumeRole",
+      "client_ip": "45.33.32.18",
+      "subnet_type": "DATACENTER_PROXY",
+      "status": "FAILURE",
+      "failure_reason": "MFA_CHALLENGE_FAILED",
+      "raw_payload": {
+        "target_role": "arn:aws:iam::112233445566:role/DatabaseClusterSuperAdmin",
+        "session_name": "emergency_breakglass_probe",
+        "mfa_serial": "arn:aws:iam::112233445566:mfa/david.kim",
+        "attack_class": "PRIVILEGE_ESCALATION_ASSUME_ROLE"
+      }
+    },
+    {
+      "id": "log_cto_assume_role_012",
+      "timestamp": "2026-09-26 08:47:09",
+      "user_id": "u_cto",
+      "source_system": "AWS CloudTrail / IAM",
+      "event_type": "sts:AssumeRole",
+      "client_ip": "45.33.32.18",
+      "subnet_type": "DATACENTER_PROXY",
+      "status": "FAILURE",
+      "failure_reason": "MFA_CHALLENGE_FAILED",
+      "raw_payload": {
+        "target_role": "arn:aws:iam::112233445566:role/DatabaseClusterSuperAdmin",
+        "session_name": "emergency_breakglass_probe",
+        "mfa_serial": "arn:aws:iam::112233445566:mfa/david.kim",
+        "attack_class": "PRIVILEGE_ESCALATION_ASSUME_ROLE"
+      }
+    },
+    {
+      "id": "log_cto_assume_role_013",
+      "timestamp": "2026-09-26 08:47:13",
+      "user_id": "u_cto",
+      "source_system": "AWS CloudTrail / IAM",
+      "event_type": "sts:AssumeRole",
+      "client_ip": "45.33.32.18",
+      "subnet_type": "DATACENTER_PROXY",
+      "status": "FAILURE",
+      "failure_reason": "MFA_CHALLENGE_FAILED",
+      "raw_payload": {
+        "target_role": "arn:aws:iam::112233445566:role/DatabaseClusterSuperAdmin",
+        "session_name": "emergency_breakglass_probe",
+        "mfa_serial": "arn:aws:iam::112233445566:mfa/david.kim",
+        "attack_class": "PRIVILEGE_ESCALATION_ASSUME_ROLE"
+      }
+    },
+    {
+      "id": "log_cto_assume_role_014",
+      "timestamp": "2026-09-26 08:47:17",
+      "user_id": "u_cto",
+      "source_system": "AWS CloudTrail / IAM",
+      "event_type": "sts:AssumeRole",
+      "client_ip": "45.33.32.18",
+      "subnet_type": "DATACENTER_PROXY",
+      "status": "FAILURE",
+      "failure_reason": "MFA_CHALLENGE_FAILED",
+      "raw_payload": {
+        "target_role": "arn:aws:iam::112233445566:role/DatabaseClusterSuperAdmin",
+        "session_name": "emergency_breakglass_probe",
+        "mfa_serial": "arn:aws:iam::112233445566:mfa/david.kim",
+        "attack_class": "PRIVILEGE_ESCALATION_ASSUME_ROLE"
+      }
+    },
+    {
+      "id": "log_cto_assume_role_015",
+      "timestamp": "2026-09-26 08:47:21",
+      "user_id": "u_cto",
+      "source_system": "AWS CloudTrail / IAM",
+      "event_type": "sts:AssumeRole",
+      "client_ip": "45.33.32.18",
+      "subnet_type": "DATACENTER_PROXY",
+      "status": "FAILURE",
+      "failure_reason": "MFA_CHALLENGE_FAILED",
+      "raw_payload": {
+        "target_role": "arn:aws:iam::112233445566:role/DatabaseClusterSuperAdmin",
+        "session_name": "emergency_breakglass_probe",
+        "mfa_serial": "arn:aws:iam::112233445566:mfa/david.kim",
+        "attack_class": "PRIVILEGE_ESCALATION_ASSUME_ROLE"
+      }
+    },
+    {
+      "id": "log_cto_assume_role_016",
+      "timestamp": "2026-09-26 08:47:25",
+      "user_id": "u_cto",
+      "source_system": "AWS CloudTrail / IAM",
+      "event_type": "sts:AssumeRole",
+      "client_ip": "45.33.32.18",
+      "subnet_type": "DATACENTER_PROXY",
+      "status": "FAILURE",
+      "failure_reason": "MFA_CHALLENGE_FAILED",
+      "raw_payload": {
+        "target_role": "arn:aws:iam::112233445566:role/DatabaseClusterSuperAdmin",
+        "session_name": "emergency_breakglass_probe",
+        "mfa_serial": "arn:aws:iam::112233445566:mfa/david.kim",
+        "attack_class": "PRIVILEGE_ESCALATION_ASSUME_ROLE"
+      }
+    },
+    {
+      "id": "log_cto_assume_role_017",
+      "timestamp": "2026-09-26 08:47:29",
+      "user_id": "u_cto",
+      "source_system": "AWS CloudTrail / IAM",
+      "event_type": "sts:AssumeRole",
+      "client_ip": "45.33.32.18",
+      "subnet_type": "DATACENTER_PROXY",
+      "status": "FAILURE",
+      "failure_reason": "MFA_CHALLENGE_FAILED",
+      "raw_payload": {
+        "target_role": "arn:aws:iam::112233445566:role/DatabaseClusterSuperAdmin",
+        "session_name": "emergency_breakglass_probe",
+        "mfa_serial": "arn:aws:iam::112233445566:mfa/david.kim",
+        "attack_class": "PRIVILEGE_ESCALATION_ASSUME_ROLE"
+      }
+    },
+    {
+      "id": "log_cto_assume_role_018",
+      "timestamp": "2026-09-26 08:47:33",
+      "user_id": "u_cto",
+      "source_system": "AWS CloudTrail / IAM",
+      "event_type": "sts:AssumeRole",
+      "client_ip": "45.33.32.18",
+      "subnet_type": "DATACENTER_PROXY",
+      "status": "FAILURE",
+      "failure_reason": "MFA_CHALLENGE_FAILED",
+      "raw_payload": {
+        "target_role": "arn:aws:iam::112233445566:role/DatabaseClusterSuperAdmin",
+        "session_name": "emergency_breakglass_probe",
+        "mfa_serial": "arn:aws:iam::112233445566:mfa/david.kim",
+        "attack_class": "PRIVILEGE_ESCALATION_ASSUME_ROLE"
+      }
+    }
+  ],
+  "class_3_lateral_token_spray": [
+    {
+      "id": "log_devops_spray_001",
+      "timestamp": "2026-09-25 17:15:36",
+      "user_id": "u_devops",
+      "source_system": "Kong API Gateway / AWS IAM",
+      "event_type": "token.introspection",
+      "client_ip": "10.0.12.89",
+      "subnet_type": "INTERNAL_VPC",
+      "status": "FAILURE",
+      "failure_reason": "INVALID_SCOPE",
+      "raw_payload": {
+        "target_service": "svc-billing-sync",
+        "pattern": "ROTATING_INTERNAL_PROBE",
+        "anomaly_note": "Multi-token probe across internal microservices",
+        "attack_class": "LATERAL_TOKEN_INTROSPECTION"
+      }
+    },
+    {
+      "id": "log_devops_spray_002",
+      "timestamp": "2026-09-25 17:15:51",
+      "user_id": "u_devops",
+      "source_system": "Kong API Gateway / AWS IAM",
+      "event_type": "token.introspection",
+      "client_ip": "10.0.12.88",
+      "subnet_type": "INTERNAL_VPC",
+      "status": "FAILURE",
+      "failure_reason": "INVALID_SCOPE",
+      "raw_payload": {
+        "target_service": "svc-billing-sync",
+        "pattern": "ROTATING_INTERNAL_PROBE",
+        "anomaly_note": "Multi-token probe across internal microservices",
+        "attack_class": "LATERAL_TOKEN_INTROSPECTION"
+      }
+    },
+    {
+      "id": "log_devops_spray_003",
+      "timestamp": "2026-09-25 17:16:06",
+      "user_id": "u_devops",
+      "source_system": "Kong API Gateway / AWS IAM",
+      "event_type": "token.introspection",
+      "client_ip": "10.0.12.89",
+      "subnet_type": "INTERNAL_VPC",
+      "status": "FAILURE",
+      "failure_reason": "INVALID_SCOPE",
+      "raw_payload": {
+        "target_service": "svc-billing-sync",
+        "pattern": "ROTATING_INTERNAL_PROBE",
+        "anomaly_note": "Multi-token probe across internal microservices",
+        "attack_class": "LATERAL_TOKEN_INTROSPECTION"
+      }
+    },
+    {
+      "id": "log_devops_spray_004",
+      "timestamp": "2026-09-25 17:16:21",
+      "user_id": "u_devops",
+      "source_system": "Kong API Gateway / AWS IAM",
+      "event_type": "token.introspection",
+      "client_ip": "10.0.12.88",
+      "subnet_type": "INTERNAL_VPC",
+      "status": "WARN",
+      "failure_reason": "INVALID_SCOPE",
+      "raw_payload": {
+        "target_service": "svc-billing-sync",
+        "pattern": "ROTATING_INTERNAL_PROBE",
+        "anomaly_note": "Multi-token probe across internal microservices",
+        "attack_class": "LATERAL_TOKEN_INTROSPECTION"
+      }
+    },
+    {
+      "id": "log_devops_spray_005",
+      "timestamp": "2026-09-25 17:16:36",
+      "user_id": "u_devops",
+      "source_system": "Kong API Gateway / AWS IAM",
+      "event_type": "token.introspection",
+      "client_ip": "10.0.12.89",
+      "subnet_type": "INTERNAL_VPC",
+      "status": "FAILURE",
+      "failure_reason": "INVALID_SCOPE",
+      "raw_payload": {
+        "target_service": "svc-billing-sync",
+        "pattern": "ROTATING_INTERNAL_PROBE",
+        "anomaly_note": "Multi-token probe across internal microservices",
+        "attack_class": "LATERAL_TOKEN_INTROSPECTION"
+      }
+    },
+    {
+      "id": "log_devops_spray_006",
+      "timestamp": "2026-09-25 17:16:51",
+      "user_id": "u_devops",
+      "source_system": "Kong API Gateway / AWS IAM",
+      "event_type": "token.introspection",
+      "client_ip": "10.0.12.88",
+      "subnet_type": "INTERNAL_VPC",
+      "status": "FAILURE",
+      "failure_reason": "INVALID_SCOPE",
+      "raw_payload": {
+        "target_service": "svc-billing-sync",
+        "pattern": "ROTATING_INTERNAL_PROBE",
+        "anomaly_note": "Multi-token probe across internal microservices",
+        "attack_class": "LATERAL_TOKEN_INTROSPECTION"
+      }
+    },
+    {
+      "id": "log_devops_spray_007",
+      "timestamp": "2026-09-25 17:17:06",
+      "user_id": "u_devops",
+      "source_system": "Kong API Gateway / AWS IAM",
+      "event_type": "token.introspection",
+      "client_ip": "10.0.12.89",
+      "subnet_type": "INTERNAL_VPC",
+      "status": "FAILURE",
+      "failure_reason": "INVALID_SCOPE",
+      "raw_payload": {
+        "target_service": "svc-billing-sync",
+        "pattern": "ROTATING_INTERNAL_PROBE",
+        "anomaly_note": "Multi-token probe across internal microservices",
+        "attack_class": "LATERAL_TOKEN_INTROSPECTION"
+      }
+    },
+    {
+      "id": "log_devops_spray_008",
+      "timestamp": "2026-09-25 17:17:21",
+      "user_id": "u_devops",
+      "source_system": "Kong API Gateway / AWS IAM",
+      "event_type": "token.introspection",
+      "client_ip": "10.0.12.88",
+      "subnet_type": "INTERNAL_VPC",
+      "status": "WARN",
+      "failure_reason": "INVALID_SCOPE",
+      "raw_payload": {
+        "target_service": "svc-billing-sync",
+        "pattern": "ROTATING_INTERNAL_PROBE",
+        "anomaly_note": "Multi-token probe across internal microservices",
+        "attack_class": "LATERAL_TOKEN_INTROSPECTION"
+      }
+    },
+    {
+      "id": "log_devops_spray_009",
+      "timestamp": "2026-09-25 17:17:36",
+      "user_id": "u_devops",
+      "source_system": "Kong API Gateway / AWS IAM",
+      "event_type": "token.introspection",
+      "client_ip": "10.0.12.89",
+      "subnet_type": "INTERNAL_VPC",
+      "status": "FAILURE",
+      "failure_reason": "INVALID_SCOPE",
+      "raw_payload": {
+        "target_service": "svc-billing-sync",
+        "pattern": "ROTATING_INTERNAL_PROBE",
+        "anomaly_note": "Multi-token probe across internal microservices",
+        "attack_class": "LATERAL_TOKEN_INTROSPECTION"
+      }
+    },
+    {
+      "id": "log_devops_spray_010",
+      "timestamp": "2026-09-25 17:17:51",
+      "user_id": "u_devops",
+      "source_system": "Kong API Gateway / AWS IAM",
+      "event_type": "token.introspection",
+      "client_ip": "10.0.12.88",
+      "subnet_type": "INTERNAL_VPC",
+      "status": "FAILURE",
+      "failure_reason": "INVALID_SCOPE",
+      "raw_payload": {
+        "target_service": "svc-billing-sync",
+        "pattern": "ROTATING_INTERNAL_PROBE",
+        "anomaly_note": "Multi-token probe across internal microservices",
+        "attack_class": "LATERAL_TOKEN_INTROSPECTION"
+      }
+    },
+    {
+      "id": "log_devops_spray_011",
+      "timestamp": "2026-09-25 17:18:06",
+      "user_id": "u_devops",
+      "source_system": "Kong API Gateway / AWS IAM",
+      "event_type": "token.introspection",
+      "client_ip": "10.0.12.89",
+      "subnet_type": "INTERNAL_VPC",
+      "status": "FAILURE",
+      "failure_reason": "INVALID_SCOPE",
+      "raw_payload": {
+        "target_service": "svc-billing-sync",
+        "pattern": "ROTATING_INTERNAL_PROBE",
+        "anomaly_note": "Multi-token probe across internal microservices",
+        "attack_class": "LATERAL_TOKEN_INTROSPECTION"
+      }
+    },
+    {
+      "id": "log_devops_spray_012",
+      "timestamp": "2026-09-25 17:18:21",
+      "user_id": "u_devops",
+      "source_system": "Kong API Gateway / AWS IAM",
+      "event_type": "token.introspection",
+      "client_ip": "10.0.12.88",
+      "subnet_type": "INTERNAL_VPC",
+      "status": "WARN",
+      "failure_reason": "INVALID_SCOPE",
+      "raw_payload": {
+        "target_service": "svc-deploy-runner",
+        "pattern": "ROTATING_INTERNAL_PROBE",
+        "anomaly_note": "Multi-token probe across internal microservices",
+        "attack_class": "LATERAL_TOKEN_INTROSPECTION"
+      }
+    },
+    {
+      "id": "log_devops_spray_013",
+      "timestamp": "2026-09-25 17:18:36",
+      "user_id": "u_devops",
+      "source_system": "Kong API Gateway / AWS IAM",
+      "event_type": "token.introspection",
+      "client_ip": "10.0.12.89",
+      "subnet_type": "INTERNAL_VPC",
+      "status": "FAILURE",
+      "failure_reason": "INVALID_SCOPE",
+      "raw_payload": {
+        "target_service": "svc-deploy-runner",
+        "pattern": "ROTATING_INTERNAL_PROBE",
+        "anomaly_note": "Multi-token probe across internal microservices",
+        "attack_class": "LATERAL_TOKEN_INTROSPECTION"
+      }
+    },
+    {
+      "id": "log_devops_spray_014",
+      "timestamp": "2026-09-25 17:18:51",
+      "user_id": "u_devops",
+      "source_system": "Kong API Gateway / AWS IAM",
+      "event_type": "token.introspection",
+      "client_ip": "10.0.12.88",
+      "subnet_type": "INTERNAL_VPC",
+      "status": "FAILURE",
+      "failure_reason": "INVALID_SCOPE",
+      "raw_payload": {
+        "target_service": "svc-deploy-runner",
+        "pattern": "ROTATING_INTERNAL_PROBE",
+        "anomaly_note": "Multi-token probe across internal microservices",
+        "attack_class": "LATERAL_TOKEN_INTROSPECTION"
+      }
+    },
+    {
+      "id": "log_devops_spray_015",
+      "timestamp": "2026-09-25 17:19:06",
+      "user_id": "u_devops",
+      "source_system": "Kong API Gateway / AWS IAM",
+      "event_type": "token.introspection",
+      "client_ip": "10.0.12.89",
+      "subnet_type": "INTERNAL_VPC",
+      "status": "FAILURE",
+      "failure_reason": "INVALID_SCOPE",
+      "raw_payload": {
+        "target_service": "svc-deploy-runner",
+        "pattern": "ROTATING_INTERNAL_PROBE",
+        "anomaly_note": "Multi-token probe across internal microservices",
+        "attack_class": "LATERAL_TOKEN_INTROSPECTION"
+      }
+    },
+    {
+      "id": "log_devops_spray_016",
+      "timestamp": "2026-09-25 17:19:21",
+      "user_id": "u_devops",
+      "source_system": "Kong API Gateway / AWS IAM",
+      "event_type": "token.introspection",
+      "client_ip": "10.0.12.88",
+      "subnet_type": "INTERNAL_VPC",
+      "status": "WARN",
+      "failure_reason": "INVALID_SCOPE",
+      "raw_payload": {
+        "target_service": "svc-deploy-runner",
+        "pattern": "ROTATING_INTERNAL_PROBE",
+        "anomaly_note": "Multi-token probe across internal microservices",
+        "attack_class": "LATERAL_TOKEN_INTROSPECTION"
+      }
+    },
+    {
+      "id": "log_devops_spray_017",
+      "timestamp": "2026-09-25 17:19:36",
+      "user_id": "u_devops",
+      "source_system": "Kong API Gateway / AWS IAM",
+      "event_type": "token.introspection",
+      "client_ip": "10.0.12.89",
+      "subnet_type": "INTERNAL_VPC",
+      "status": "FAILURE",
+      "failure_reason": "INVALID_SCOPE",
+      "raw_payload": {
+        "target_service": "svc-deploy-runner",
+        "pattern": "ROTATING_INTERNAL_PROBE",
+        "anomaly_note": "Multi-token probe across internal microservices",
+        "attack_class": "LATERAL_TOKEN_INTROSPECTION"
+      }
+    },
+    {
+      "id": "log_devops_spray_018",
+      "timestamp": "2026-09-25 17:19:51",
+      "user_id": "u_devops",
+      "source_system": "Kong API Gateway / AWS IAM",
+      "event_type": "token.introspection",
+      "client_ip": "10.0.12.88",
+      "subnet_type": "INTERNAL_VPC",
+      "status": "FAILURE",
+      "failure_reason": "INVALID_SCOPE",
+      "raw_payload": {
+        "target_service": "svc-deploy-runner",
+        "pattern": "ROTATING_INTERNAL_PROBE",
+        "anomaly_note": "Multi-token probe across internal microservices",
+        "attack_class": "LATERAL_TOKEN_INTROSPECTION"
+      }
+    },
+    {
+      "id": "log_devops_spray_019",
+      "timestamp": "2026-09-25 17:20:06",
+      "user_id": "u_devops",
+      "source_system": "Kong API Gateway / AWS IAM",
+      "event_type": "token.introspection",
+      "client_ip": "10.0.12.89",
+      "subnet_type": "INTERNAL_VPC",
+      "status": "FAILURE",
+      "failure_reason": "INVALID_SCOPE",
+      "raw_payload": {
+        "target_service": "svc-deploy-runner",
+        "pattern": "ROTATING_INTERNAL_PROBE",
+        "anomaly_note": "Multi-token probe across internal microservices",
+        "attack_class": "LATERAL_TOKEN_INTROSPECTION"
+      }
+    },
+    {
+      "id": "log_devops_spray_020",
+      "timestamp": "2026-09-25 17:20:21",
+      "user_id": "u_devops",
+      "source_system": "Kong API Gateway / AWS IAM",
+      "event_type": "token.introspection",
+      "client_ip": "10.0.12.88",
+      "subnet_type": "INTERNAL_VPC",
+      "status": "WARN",
+      "failure_reason": "INVALID_SCOPE",
+      "raw_payload": {
+        "target_service": "svc-deploy-runner",
+        "pattern": "ROTATING_INTERNAL_PROBE",
+        "anomaly_note": "Multi-token probe across internal microservices",
+        "attack_class": "LATERAL_TOKEN_INTROSPECTION"
+      }
+    },
+    {
+      "id": "log_devops_spray_021",
+      "timestamp": "2026-09-25 17:20:36",
+      "user_id": "u_devops",
+      "source_system": "Kong API Gateway / AWS IAM",
+      "event_type": "token.introspection",
+      "client_ip": "10.0.12.89",
+      "subnet_type": "INTERNAL_VPC",
+      "status": "FAILURE",
+      "failure_reason": "INVALID_SCOPE",
+      "raw_payload": {
+        "target_service": "svc-deploy-runner",
+        "pattern": "ROTATING_INTERNAL_PROBE",
+        "anomaly_note": "Multi-token probe across internal microservices",
+        "attack_class": "LATERAL_TOKEN_INTROSPECTION"
+      }
+    },
+    {
+      "id": "log_devops_spray_022",
+      "timestamp": "2026-09-25 17:20:51",
+      "user_id": "u_devops",
+      "source_system": "Kong API Gateway / AWS IAM",
+      "event_type": "token.introspection",
+      "client_ip": "10.0.12.88",
+      "subnet_type": "INTERNAL_VPC",
+      "status": "FAILURE",
+      "failure_reason": "INVALID_SCOPE",
+      "raw_payload": {
+        "target_service": "svc-deploy-runner",
+        "pattern": "ROTATING_INTERNAL_PROBE",
+        "anomaly_note": "Multi-token probe across internal microservices",
+        "attack_class": "LATERAL_TOKEN_INTROSPECTION"
+      }
+    },
+    {
+      "id": "log_devops_spray_023",
+      "timestamp": "2026-09-25 17:21:06",
+      "user_id": "u_devops",
+      "source_system": "Kong API Gateway / AWS IAM",
+      "event_type": "token.introspection",
+      "client_ip": "10.0.12.89",
+      "subnet_type": "INTERNAL_VPC",
+      "status": "FAILURE",
+      "failure_reason": "INVALID_SCOPE",
+      "raw_payload": {
+        "target_service": "svc-deploy-runner",
+        "pattern": "ROTATING_INTERNAL_PROBE",
+        "anomaly_note": "Multi-token probe across internal microservices",
+        "attack_class": "LATERAL_TOKEN_INTROSPECTION"
+      }
+    },
+    {
+      "id": "log_devops_spray_024",
+      "timestamp": "2026-09-25 17:21:21",
+      "user_id": "u_devops",
+      "source_system": "Kong API Gateway / AWS IAM",
+      "event_type": "token.introspection",
+      "client_ip": "10.0.12.88",
+      "subnet_type": "INTERNAL_VPC",
+      "status": "WARN",
+      "failure_reason": "INVALID_SCOPE",
+      "raw_payload": {
+        "target_service": "svc-deploy-runner",
+        "pattern": "ROTATING_INTERNAL_PROBE",
+        "anomaly_note": "Multi-token probe across internal microservices",
+        "attack_class": "LATERAL_TOKEN_INTROSPECTION"
+      }
+    },
+    {
+      "id": "log_devops_spray_025",
+      "timestamp": "2026-09-25 17:21:36",
+      "user_id": "u_devops",
+      "source_system": "Kong API Gateway / AWS IAM",
+      "event_type": "token.introspection",
+      "client_ip": "10.0.12.89",
+      "subnet_type": "INTERNAL_VPC",
+      "status": "FAILURE",
+      "failure_reason": "INVALID_SCOPE",
+      "raw_payload": {
+        "target_service": "svc-deploy-runner",
+        "pattern": "ROTATING_INTERNAL_PROBE",
+        "anomaly_note": "Multi-token probe across internal microservices",
+        "attack_class": "LATERAL_TOKEN_INTROSPECTION"
+      }
+    }
+  ],
+  "class_4_developer_secret_leak": [
+    {
+      "id": "log_eng_secret_leak_001",
+      "timestamp": "2026-09-25 11:15:43",
+      "user_id": "u_eng",
+      "source_system": "GitHub Enterprise Server",
+      "event_type": "secret.git_leak_detected",
+      "client_ip": "73.189.44.12",
+      "subnet_type": "HOME_ISP",
+      "status": "WARN",
+      "failure_reason": "PUBLIC_COMMIT_SECRET",
+      "raw_payload": {
+        "repository": "enterprise/commerce-core",
+        "commit_hash": "f8a91c90b34e12",
+        "secret_type": "Personal Access Token (ghp_staging_api_99x)",
+        "file_path": "tests/integration/test_payment_gateway.py",
+        "attack_class": "DEVELOPER_SECRET_EXPOSURE"
+      }
+    }
+  ],
+  "class_5_impossible_travel": [
+    {
+      "id": "log_soc_travel_001",
+      "timestamp": "2026-09-25 19:01:21",
+      "user_id": "u_soc",
+      "source_system": "Okta SSO",
+      "event_type": "user.login",
+      "client_ip": "73.189.44.89",
+      "subnet_type": "HOME_ISP",
+      "status": "SUCCESS",
+      "failure_reason": null,
+      "raw_payload": {
+        "geo_city": "New York",
+        "geo_country": "US",
+        "auth_method": "FIDO2_PASSKEY"
+      }
+    },
+    {
+      "id": "log_soc_travel_002",
+      "timestamp": "2026-09-25 19:15:21",
+      "user_id": "u_soc",
+      "source_system": "Okta SSO",
+      "event_type": "user.login",
+      "client_ip": "203.0.113.88",
+      "subnet_type": "DATACENTER_PROXY",
+      "status": "FAILURE",
+      "failure_reason": "IMPOSSIBLE_TRAVEL_SPEED",
+      "raw_payload": {
+        "geo_city": "Singapore",
+        "geo_country": "SG",
+        "delta_km": 15300,
+        "delta_minutes": 14,
+        "attack_class": "IMPOSSIBLE_TRAVEL_ANOMALY"
+      }
+    }
+  ],
+  "class_6_stale_key_hygiene": [
+    {
+      "id": "log_hygiene_stale_keys_001",
+      "timestamp": "2026-09-25 21:01:21",
+      "user_id": "u_devops",
+      "source_system": "AWS IAM / Posture Scanner",
+      "event_type": "iam.audit_key_age",
+      "client_ip": "10.0.0.1",
+      "subnet_type": "INTERNAL_VPC",
+      "status": "WARN",
+      "failure_reason": "UNROTATED_ADMIN_CREDENTIAL",
+      "raw_payload": {
+        "key_count": 3,
+        "age_days": 184,
+        "permission_tier": "AdministratorAccess",
+        "attack_class": "HYGIENE_POSTURE_DRIFT"
+      }
+    }
+  ]
+}
