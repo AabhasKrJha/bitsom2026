@@ -1,101 +1,173 @@
-# 🛡️ Sentix AutoOps: Autonomous Incident Triage with Blast-Radius Guardrails
+# Sentix MDR: Autonomous Incident Detection & Role-Gated Governance
 
-> **Enterprise AI Track • Builders Pitch Fest Prototype**  
-> *Built with FastAPI, Streamlit, Azure OpenAI / LLM, and TypeSafe Jev System-One Primitives (`Choice`, `Score`, `Noul`)*
-
----
-
-## 📌 Executive Summary (The 1-Slide Pitch)
-
-### 1. Problem Statement: The Enterprise Blast-Radius Dilemma
-* **The Reality:** Enterprises receive tens of thousands of authentication, VPN, and identity alerts daily. Tier-1 SOC analysts spend **80% of their shift manually correlating logs, IPs, and user directories**, taking 15–45 minutes per alert.
-* **The Dilemma:**
-  * **Pure manual triage is too slow:** Attackers succeed in credential stuffing in under 2 minutes.
-  * **Full automation is too dangerous:** High-blast-radius actions (e.g., null-routing a `/24` subnet or locking an Executive's account) disrupt legitimate B2B partner gateways and halt business revenue.
-
-### 2. The Solution: Sentix AutoOps
-An autonomous Tier-1 SecOps decision engine with **Blast-Radius Guardrails**:
-* **Generative LLM (Azure OpenAI):** Parses unstructured logs & extracts dynamic context tags (Executive identity, shared partner subnet, velocity spike).
-* **TypeSafe Jev System-One:** Evaluates parallel, calibrated structured decision primitives (`Choice`, `Score`, `Noul`) in **<180ms with zero hallucination risk**.
-* **Blast-Radius Guardrails:**
-  * **Low-Blast Noise (Routine users, single IP):** Autonomously rate-limited at the Edge WAF without analyst intervention.
-  * **High-Blast Threats (Executive target, shared partner subnet):** Pre-drafted with plain-English rationales for **1-click Human-in-the-Loop (HITL) sign-off**.
-
-### 3. Key Impact Metrics
-* **98.8% Reduction in Triage Latency:** From 25 minutes manual review down to 178ms.
-* **Zero Unauthorized Collateral Disruption:** Mission-critical partner gateways and executive accounts are safeguarded by blast-radius policy checks.
+Enterprise security telemetry evaluation, blast-radius containment, and role-based execution.
 
 ---
 
-## 🏗️ Architecture & Dynamic Schema Synthesis
+## Executive Overview
+
+### The Operational Challenge
+Modern enterprise security teams face a fundamental operational trade-off:
+- **Triage Fatigue:** Enterprises generate tens of thousands of authentication, API, and network telemetry events daily. Security operations analysts spend the majority of their shifts manually correlating IP addresses, directory records, and service meshes, leading to mean-time-to-respond (MTTR) figures exceeding 20 minutes per incident.
+- **The Blast-Radius Risk:** Fully autonomous containment actions are dangerous in complex enterprise architectures. Null-routing an IP range or terminating an enterprise identity can inadvertently disrupt revenue-critical B2B partner EDI channels, production database replication, or executive single sign-on access.
+
+### The Sentix Solution
+Sentix MDR provides an automated decision engine that dynamically balances threat confidence against collateral operational disruption:
+- **Objective Evaluation:** Ingests raw telemetry and computes calibrated threat probabilities alongside operational blast-radius metrics.
+- **Three-Tier Governance Model:**
+  - **Tier 1 (Automated Action):** High threat confidence with negligible blast radius. Containment is executed instantly at the perimeter edge without analyst intervention.
+  - **Tier 2 (Drafted 1-Click Action):** Verified threats with moderate blast radius. Containment scripts and perimeter rules are drafted and routed exclusively to the designated authority (CISO, CTO, or Platform Lead) for single-click execution.
+  - **Tier 3 (Technical Playbook):** High blast radius or systemic architecture drift where automated execution could cause operational outages. Generates prioritized, multi-step engineering remediation procedures and verification commands.
+  - **Tier 0 (Benign Baseline):** Verified normal traffic filtered before alert ledgers to eliminate operational noise.
+
+### Key Performance Indicators
+- **Triage Latency:** Reduced from an industry average of 25 minutes to under 200 milliseconds.
+- **Collateral Downtime:** Zero unauthorized disruptions on shared partner gateways or production clusters through deterministic blast-radius guardrails.
+- **Role Isolation:** Strict per-persona scoping ensuring executives and infrastructure leads only see and authorize actions within their verified asset boundary.
+
+---
+
+## System Architecture
 
 ```
-[ Raw Enterprise Log (Okta / SAP / VPN) ]
-                   │
-                   ▼
-  [ LLM Telemetry & Dynamic Tag Synthesizer ]
-  Extracts: IP, Account, Role, Velocity, Subnet Sharedness
-                   │
-                   ▼
-  [ TypeSafe Jev System-One Primitives (Parallel Evaluation) ]
-  ├── Static Core Questions:
-  │   ├── is_signature_match (Noul: 0–1 probability of automated brute force)
-  │   ├── base_threat_score (Score: 0 to 2 ordered severity levels)
-  │   └── triage_policy (Choice: auto_rate_limit vs draft_and_approve vs escalate)
-  │
-  └── Dynamic Speculative Questions (Triggered by Context Tags):
-      ├── Executive Account: executive_compromise_risk (Score) & targeted_spear_risk (Noul)
-      ├── Shared Gateway Subnet: blast_radius_impact (Score) & mitigation_strategy (Choice)
-      └── Service Token Spray: is_internal_reconnaissance (Noul)
-                   │
-                   ▼
-  [ Policy Engine & Blast-Radius Guardrails ]
-  ├── If Low Blast + High Confidence (>0.85)  ──► [ ⚡ Autonomous Execution (WAF Rate-Limit) ]
-  ├── If High Blast OR High Threat (>7.5/10)  ──► [ ⚠️ Streamlit HITL Approval Cockpit ]
-  └── If Ambiguous Anomaly / Low Confidence    ──► [ 🔍 Tier-2 Threat Hunter Escalation ]
+[ Ingested Security Telemetry ]
+               │
+               ▼
+[ State Synthesizer & Topology Resolution ]
+  Maps client IPs, user directories, subnets, and service criticality
+               │
+               ▼
+[ Candidate Action Formulation & Dynamic Question Battery ]
+  Formulates context-specific containment options and risk queries
+               │
+               ▼
+[ Cognitive Jev Evaluation Engine ]
+  Evaluates threat likelihood, blast radius, and action safety scores (<180ms)
+               │
+               ▼
+[ Deterministic Decision Engine ]
+  ├── Threat >= 0.75 and Blast < 0.20  ──► [ Tier 1: Machine Automated Execution ]
+  ├── Threat >= 0.70 and Blast <= 0.70 ──► [ Tier 2: Role-Gated 1-Click Mitigation ]
+  ├── Blast > 0.70 or Posture Drift    ──► [ Tier 3: Technical Mitigation Playbook ]
+  └── Threat < 0.20                    ──► [ Tier 0: Benign Telemetry Filtered ]
+               │
+               ▼
+[ Immutable SQLite Audit Ledger ] ◄──► [ Real-Time Next.js Governance Console ]
 ```
 
 ---
 
-## 🚀 Quickstart & Demo Setup
+## Persona-Based Governance (RBAC Model)
 
-### 1. Prerequisites
-* Python 3.10+ (Tested on Python 3.13)
-* Dependencies installed in `./venv`
+Sentix enforces strict role separation so that decision interfaces display only the alerts and execution rights appropriate to each persona:
 
-### 2. Launch with One Command
+| Persona ID | Name | Role Title | Asset Authority Scope | Visible Tiers |
+| :--- | :--- | :--- | :--- | :--- |
+| `u_ciso` | Elena Rostova | Chief Information Security Officer | Enterprise SSO, Identity Governance, Executive Portals, B2B Partner Subnets | Tier 2, Tier 3 |
+| `u_cto` | David Kim | Chief Technology Officer | Production Cloud Architecture, AWS Root Accounts, Production Aurora DB | Tier 2, Tier 3 |
+| `u_devops` | Marcus Vance | Staff Platform / DevOps Tech Lead | Kubernetes Clusters, CI/CD Secrets, IAM Service Accounts | Tier 2, Tier 3 |
+| `u_soc` | Sarah Jenkins | Incident Response / SOC Lead | Edge WAF, Cloudflare Policies, Ingress Telemetry, Threat Hunting | Tier 1, Tier 2, Tier 3 |
+| `u_eng` | Alex Rivera | Senior Platform Engineer | Developer Workstations, Git Repositories, Staging API Keys | Tier 1, Tier 3 |
+
+---
+
+## Technical Specifications
+
+### Backend Services
+- **Framework:** FastAPI (Python 3.10+) with Uvicorn ASGI server.
+- **Persistence:** SQLite database with indexed audit ledger, relational topology schema, and WAL mode.
+- **Validation:** Pydantic v2 schemas for strict request/response data contracts.
+- **Inference Engine:** TypeSafe Jev System-One Primitives (`Choice`, `Score`, `Noul`) with deterministic heuristic evaluation fallbacks.
+
+### Frontend Console
+- **Framework:** Next.js 16.3.6 (React 19, TypeScript).
+- **Styling & Components:** Tailwind CSS with shadcn/ui components (Radix/Base UI primitives).
+- **Layout Architecture:**
+  - Single-line tabular density with zero text wrapping (`table-fixed`, proportional widths).
+  - Synchronized single-surface vertical scrolling with sticky Incident Inspector.
+  - Active persona context switcher dynamically filtering audit records and telemetry feeds.
+
+---
+
+## API Reference
+
+### Telemetry Ingestion
+- `POST /api/logs/ingest`
+  Ingests a raw telemetry log, executes the cognitive evaluation pipeline, assigns a governance tier, records an audit entry if actionable, and returns the evaluation receipt.
+
+### Telemetry Lake
+- `GET /api/logs?limit=100&user_id={persona_id}`
+  Retrieves chronological log events. Scoped to specific persona identities or fleet-wide for SOC analysts.
+
+### Audit Ledger & Governance
+- `GET /api/audit?limit=50&persona_id={persona_id}&tier={tier}`
+  Queries decisions from the audit ledger. Evaluates persona authorization flags (`can_act`) and filters records to the actor's asset scope.
+- `POST /api/audit/{id}/approve`
+  Executes a drafted Tier 2 containment action. Verifies that the requesting actor matches the authorized persona ID before recording state transition to `EXECUTED_BY_OPERATOR`.
+
+### Topology Introspection
+- `GET /api/topology`
+  Returns active enterprise topology facts: directory users, infrastructure nodes, client workstations, and network subnets.
+- `POST /api/topology/reset`
+  Resets logs and audit decision records back to a pristine baseline state for demonstration workflows.
+
+---
+
+## Quickstart & Local Deployment
+
+### Prerequisites
+- Python 3.10 or higher
+- Node.js 18.0 or higher
+- npm 9.0 or higher
+
+### Automated Launch
+Use the root execution script to start all services simultaneously:
 ```bash
 ./run.sh
 ```
-This automatically launches:
-* **FastAPI Backend:** `http://localhost:8000` (API Docs at `http://localhost:8000/docs`)
-* **Streamlit Cockpit:** `http://localhost:8501`
 
-### 3. Manual Launch (Alternative)
+This starts:
+- **FastAPI Backend:** `http://localhost:8000` (OpenAPI specification at `/docs`)
+- **Next.js Console:** `http://localhost:3000`
+
+### Manual Execution
+
+#### 1. Backend Service
 ```bash
-# Terminal 1: Backend
-./venv/bin/uvicorn backend.main:app --port 8000 --reload
+source venv/bin/activate
+uvicorn backend.app.main:app --host 0.0.0.0 --port 8000 --reload
+```
 
-# Terminal 2: Frontend
-./venv/bin/streamlit run frontend/app.py
+#### 2. Frontend Console
+```bash
+cd frontend-next
+npm run dev
+```
+
+#### 3. Telemetry Streamer (Optional)
+To stream enterprise security logs with realistic pacing:
+```bash
+./venv/bin/python backend/scripts/stream_logs.py
 ```
 
 ---
 
-## 🎯 7-Minute Demo Runbook for Judges (5:30 PM)
+## Verification & Testing
 
-| Time | Action | What to Explain to Judges |
-| :--- | :--- | :--- |
-| **0:00 - 1:15** | Open **Tab 3: 1-Slide Pitch** | Introduce the problem: alert fatigue vs blast-radius trap. Explain how Sentix AutoOps solves it with TypeSafe Jev. |
-| **1:15 - 2:45** | Click **🟢 Scenario 1 (Routine Noise)** | Show 4 failed logins on junior coordinator. Jev scores 0.28 (threat low), zero blast radius. **Auto-mitigated immediately** (Edge WAF rate-limit). Zero analyst time wasted. |
-| **2:45 - 4:45** | Click **🔴 Scenario 2 (Attack on CFO)** | 52 attempts on CFO at 3:18 AM from an EMEA partner subnet. Show dynamic schema adaptation (`executive_compromise_risk` & `blast_radius_impact`). Threat is 9.4/10, but **system halted full subnet block** because 18 partner EDI webhooks share the subnet. Show drafted action. Click **"✅ Approve & Enforce"**. Show instant live audit ledger update! |
-| **4:45 - 5:45** | Click **🟡 Scenario 3 (Token Spray)** | Irregular multi-token probe. Jev reports low confidence (0.48). Show how system gracefully escalates to Lead Threat Hunter rather than hallucinating an action. |
-| **5:45 - 7:00** | Q&A & Architecture | Highlight why Jev System-One was chosen (calibrated probabilities, parallel execution, typed control flow in code, no LLM prompt drift). |
+### Frontend Build & Lint Checks
+```bash
+cd frontend-next
+npx tsc --noEmit
+npm run lint
+npm run build
+```
+
+### Backend Test Suite
+```bash
+./venv/bin/python -m pytest tests/
+```
 
 ---
 
-## 🛠️ Technology Stack
-* **Decision Primitives:** TypeSafe Jev System-One (`typesafe-sdk`, `Choice`, `Score`, `Noul`)
-* **Extraction:** OpenAI / Azure OpenAI GPT-4o-mini + High-fidelity heuristic fallback
-* **Backend:** FastAPI, Pydantic v2, Uvicorn
-* **Frontend:** Streamlit Dark-mode SOC Cockpit, Pandas
+## License
+Proprietary and confidential. Internal enterprise demonstration release.
