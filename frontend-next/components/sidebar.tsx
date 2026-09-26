@@ -8,7 +8,6 @@ import {
   Network,
   ChevronUp,
   Check,
-  Shield,
   PanelLeftClose,
   PanelLeftOpen,
 } from "lucide-react";
@@ -64,33 +63,17 @@ export function Sidebar({
         isCollapsed ? "w-16" : "w-60"
       }`}
     >
-      {/* Top Branding (shadcn Sidebar Style) */}
+      {/* Top Header - Minimalist */}
       <div>
         <div
-          className={`h-14 flex items-center border-b border-zinc-200/70 px-3 ${
+          className={`h-12 flex items-center border-b border-zinc-200/70 px-3 ${
             isCollapsed ? "justify-center" : "justify-between"
           }`}
         >
           {!isCollapsed && (
-            <div className="flex items-center gap-2 overflow-hidden">
-              <div className="h-7 w-7 rounded-lg bg-zinc-100 text-zinc-900 border border-zinc-200/80 flex items-center justify-center shrink-0 shadow-2xs">
-                <Shield className="h-3.5 w-3.5" />
-              </div>
-              <div className="overflow-hidden">
-                <div className="font-bold text-xs tracking-tight text-zinc-900 font-mono flex items-center gap-1.5 truncate">
-                  <span>SENTIX</span>
-                  <span className="text-[9px] font-semibold uppercase px-1 py-0.2 rounded bg-zinc-200 text-zinc-700">
-                    MDR
-                  </span>
-                </div>
-              </div>
-            </div>
-          )}
-
-          {isCollapsed && (
-            <div className="h-7 w-7 rounded-lg bg-zinc-100 text-zinc-900 border border-zinc-200/80 flex items-center justify-center shrink-0 shadow-2xs">
-              <Shield className="h-3.5 w-3.5" />
-            </div>
+            <span className="text-xs font-semibold tracking-tight text-zinc-900">
+              Operations
+            </span>
           )}
 
           <button
@@ -224,11 +207,8 @@ export function Sidebar({
           >
             <DropdownMenuGroup>
               <DropdownMenuLabel className="px-2.5 py-1 text-[11px] font-semibold text-zinc-500 uppercase tracking-wider">
-                Switch Governance Persona
+                Switch Persona
               </DropdownMenuLabel>
-              <div className="text-[11px] text-zinc-500 px-2.5 pb-1.5">
-                Active persona defines visible tiers and 1-click execution authority.
-              </div>
 
               <DropdownMenuSeparator className="bg-zinc-100 my-1" />
 

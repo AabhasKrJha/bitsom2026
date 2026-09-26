@@ -275,6 +275,10 @@ def get_audit_records(
         query += " AND selected_tier = ?"
         params.append(tier)
 
+    if persona_id and persona_id != "u_soc":
+        query += " AND (authorized_persona_id = ? OR target_user_id = ?)"
+        params.extend([persona_id, persona_id])
+
     query += " ORDER BY timestamp DESC LIMIT ?"
     params.append(limit)
 

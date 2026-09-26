@@ -26,8 +26,8 @@ import {
   Lock,
   Copy,
   Check,
-  Clock,
   ArrowUpRight,
+  SlidersHorizontal,
 } from "lucide-react";
 
 interface DecisionCenterProps {
@@ -35,6 +35,16 @@ interface DecisionCenterProps {
   currentPersona: UserPersona;
   allPersonas: UserPersona[];
   onApprove: (auditId: string) => Promise<void>;
+}
+
+function getShortRole(persona?: UserPersona) {
+  if (!persona) return "Authority";
+  if (persona.id === "u_ciso") return "CISO";
+  if (persona.id === "u_cto") return "CTO";
+  if (persona.id === "u_devops") return "DevOps";
+  if (persona.id === "u_eng") return "Eng Lead";
+  if (persona.id === "u_soc") return "SOC";
+  return persona.name.split(" ")[0];
 }
 
 export function DecisionCenter({
@@ -57,10 +67,21 @@ export function DecisionCenter({
     "TIER_3_PLAYBOOK",
   ];
 
-  // Strictly filter by this persona's visibility scope
-  const personaVisibleRecords = records.filter((r) =>
-    visibleTiers.includes(r.selected_tier)
-  );
+  // Strictly filter by this persona's visibility scope & role authority
+  const personaVisibleRecords = records.filter((r) => {
+    // 1. Must be in this persona's visible tiers
+    if (!visibleTiers.includes(r.selected_tier)) return false;
+
+    // 2. SOC persona has organization-wide oversight across all fleets & tiers
+    if (currentPersona.id === "u_soc") return true;
+
+    // 3. Other personas strictly see incidents in their asset scope or authority
+    return (
+      r.authorized_persona_id === currentPersona.id ||
+      r.target_user_id === currentPersona.id ||
+      r.action_payload?.authorized_persona_id === currentPersona.id
+    );
+  });
 
   const pendingForMe = personaVisibleRecords.filter(
     (r) =>
@@ -98,15 +119,17 @@ export function DecisionCenter({
   const filtered = getFilteredByTab().filter((record) => {
     if (!searchQuery.trim()) return true;
     const query = searchQuery.toLowerCase();
+    const targetPersona = allPersonas.find((p) => p.id === record.target_user_id);
     return (
       record.attack_class.toLowerCase().includes(query) ||
       record.target_user_id.toLowerCase().includes(query) ||
+      (targetPersona && targetPersona.name.toLowerCase().includes(query)) ||
       record.target_service.toLowerCase().includes(query) ||
       record.reason.toLowerCase().includes(query)
     );
   });
 
-  // Selected record for right activity panel
+  // Selected record for right inspector panel
   const activeRecord =
     filtered.find((r) => r.id === selectedIncidentId) ||
     filtered.find((r) => r.execution_status === "AWAITING_APPROVAL") ||
@@ -137,34 +160,24 @@ export function DecisionCenter({
     }
   };
 
+  const activeTargetPersona = activeRecord
+    ? allPersonas.find((p) => p.id === activeRecord.target_user_id)
+    : null;
+
   return (
     <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 select-none items-start">
       {/* LEFT COLUMN: Main Table (~65% width) */}
-      <div className="lg:col-span-8 space-y-3.5">
-        {/* Header Block */}
-        <div className="space-y-1">
-          <div className="flex items-center gap-1.5 text-xs text-zinc-400">
-            <Lock className="h-3 w-3" />
-            <span>Governance Database</span>
-          </div>
-          <h1 className="text-xl font-bold tracking-tight text-zinc-900">
-            Incident & Threat Governance
-          </h1>
-          <p className="text-xs text-zinc-500">
-            Automated detection, blast radius containment, and role-gated 1-click execution.
-          </p>
-        </div>
-
-        {/* View Tabs (shadcn Tabs Primitive) + Search Box */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-zinc-200/80 pb-2">
+      <div className="lg:col-span-8 space-y-3">
+        {/* Sleek, Compact Toolbar (View Tabs + Search) */}
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5">
           <Tabs
             value={filterTab}
             onValueChange={(val) => setFilterTab(val as string)}
             className="w-full sm:w-auto"
           >
-            <TabsList className="bg-zinc-100/90 border border-zinc-200/70 p-0.5 h-8">
+            <TabsList className="bg-zinc-100/90 border border-zinc-200/80 p-0.5 h-8">
               <TabsTrigger value="all" className="text-xs px-2.5 py-1">
-                All Visible ({personaVisibleRecords.length})
+                All ({personaVisibleRecords.length})
               </TabsTrigger>
 
               {visibleTiers.includes("TIER_2_DRAFTED_HITL") && (
@@ -179,19 +192,19 @@ export function DecisionCenter({
 
               {visibleTiers.includes("TIER_1_AUTOMATED") && (
                 <TabsTrigger value="tier1" className="text-xs px-2.5 py-1">
-                  Tier 1 Auto ({tier1Records.length})
+                  Tier 1 ({tier1Records.length})
                 </TabsTrigger>
               )}
 
               {visibleTiers.includes("TIER_2_DRAFTED_HITL") && (
                 <TabsTrigger value="tier2" className="text-xs px-2.5 py-1">
-                  Tier 2: 1-Click ({tier2Records.length})
+                  Tier 2 ({tier2Records.length})
                 </TabsTrigger>
               )}
 
               {visibleTiers.includes("TIER_3_PLAYBOOK") && (
                 <TabsTrigger value="tier3" className="text-xs px-2.5 py-1">
-                  Tier 3 Playbooks ({tier3Records.length})
+                  Tier 3 ({tier3Records.length})
                 </TabsTrigger>
               )}
             </TabsList>
@@ -199,34 +212,35 @@ export function DecisionCenter({
 
           {/* Search Box */}
           <div className="relative">
-            <Search className="absolute left-2.5 top-2 h-3.5 w-3.5 text-zinc-400" />
+            <Search className="absolute left-2.5 top-2.5 h-3.5 w-3.5 text-zinc-400" />
             <input
               type="text"
-              placeholder="Search incidents..."
+              placeholder="Filter incidents..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="h-8 rounded-md border border-zinc-200 bg-white pl-8 pr-2.5 text-xs text-zinc-900 placeholder:text-zinc-400 focus:border-zinc-400 focus:outline-none w-48 shadow-2xs"
+              className="h-8 rounded-lg border border-zinc-200 bg-white pl-8 pr-2.5 text-xs text-zinc-900 placeholder:text-zinc-400 focus:border-zinc-400 focus:outline-none w-52 shadow-2xs"
             />
           </div>
         </div>
 
-        {/* Table Container - Strictly table-fixed with proportional widths for ZERO SCROLL */}
-        <div className="rounded-xl border border-zinc-200/90 bg-white overflow-hidden shadow-2xs">
+        {/* Table Container - table-fixed with zero text wrapping */}
+        <div className="rounded-xl border border-zinc-200/90 bg-white shadow-2xs overflow-clip">
           <Table className="w-full table-fixed">
-            <TableHeader className="bg-zinc-50/80 border-b border-zinc-200">
+            <TableHeader className="bg-zinc-50/95 backdrop-blur-xs border-b border-zinc-200 sticky top-14 z-10 shadow-2xs">
               <TableRow className="hover:bg-transparent">
-                <TableHead className="w-[32%] text-[11px] font-medium text-zinc-500">Incident & Vector</TableHead>
-                <TableHead className="w-[22%] text-[11px] font-medium text-zinc-500">Target Identity</TableHead>
-                <TableHead className="w-[16%] text-[11px] font-medium text-zinc-500">Tier</TableHead>
-                <TableHead className="w-[10%] text-[11px] font-medium text-zinc-500 text-right">Threat %</TableHead>
-                <TableHead className="w-[10%] text-[11px] font-medium text-zinc-500 text-right">Blast %</TableHead>
-                <TableHead className="w-[10%] text-[11px] font-medium text-zinc-500 text-right">Resolution</TableHead>
+                <TableHead className="w-[32%] text-[11px] font-medium text-zinc-500">Incident Vector</TableHead>
+                <TableHead className="w-[20%] text-[11px] font-medium text-zinc-500">Target</TableHead>
+                <TableHead className="w-[12%] text-[11px] font-medium text-zinc-500">Tier</TableHead>
+                <TableHead className="w-[8%] text-[11px] font-medium text-zinc-500 text-right">Threat</TableHead>
+                <TableHead className="w-[8%] text-[11px] font-medium text-zinc-500 text-right">Blast</TableHead>
+                <TableHead className="w-[9%] text-[11px] font-medium text-zinc-500 text-right">Time</TableHead>
+                <TableHead className="w-[11%] text-[11px] font-medium text-zinc-500 text-right">Action</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {filtered.length === 0 ? (
                 <TableRow>
-                  <TableCell colSpan={6} className="h-40 text-center text-xs text-zinc-400">
+                  <TableCell colSpan={7} className="h-40 text-center text-xs text-zinc-400">
                     <div className="h-8 w-8 rounded-full bg-zinc-100 flex items-center justify-center text-zinc-400 mx-auto mb-2">
                       <Inbox className="h-4 w-4" />
                     </div>
@@ -239,7 +253,6 @@ export function DecisionCenter({
                   const payload = record.action_payload || {};
                   const isTier1 = record.selected_tier === "TIER_1_AUTOMATED";
                   const isTier2 = record.selected_tier === "TIER_2_DRAFTED_HITL";
-                  const isTier3 = record.selected_tier === "TIER_3_PLAYBOOK";
 
                   const isOptimisticallyApproved = optimisticApproved.has(record.id);
                   const isExecuted =
@@ -252,66 +265,49 @@ export function DecisionCenter({
                   );
                   const canAct = record.can_act ?? (record.authorized_persona_id === currentPersona.id);
 
+                  const targetPersona = allPersonas.find((p) => p.id === record.target_user_id);
+                  const initials = targetPersona?.avatar_initials || (record.target_user_id.startsWith("u_") ? record.target_user_id.slice(2, 4).toUpperCase() : "ID");
+                  const displayName = targetPersona?.name || record.target_user_id;
+
                   const rowShadeClass = isExecuted
                     ? "bg-zinc-50/40 text-zinc-500 opacity-80"
                     : "bg-white text-zinc-900";
 
                   const shortId = `SEC-${record.id.slice(4, 9).toUpperCase()}`;
+                  const timeFormatted = record.timestamp.includes("T")
+                    ? record.timestamp.split("T")[1].slice(0, 8)
+                    : record.timestamp.includes(" ")
+                    ? record.timestamp.split(" ")[1]
+                    : record.timestamp;
 
                   return (
                     <TableRow
                       key={record.id}
                       className={`text-xs border-b border-zinc-100 hover:bg-zinc-50/90 transition-all cursor-pointer group ${rowShadeClass} ${
-                        isSelected ? "bg-zinc-100/60 font-medium" : ""
+                        isSelected ? "bg-zinc-100/70 font-medium" : ""
                       }`}
                       onClick={() => setSelectedIncidentId(record.id)}
                     >
-                      {/* Column 1: Incident & Vector */}
-                      <TableCell className="overflow-hidden">
-                        <div className="flex items-center gap-1.5">
-                          <span className="font-mono text-[10px] text-zinc-400">{shortId}</span>
-                          <button
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              handleCopy(record.id, false);
-                            }}
-                            className="opacity-0 group-hover:opacity-100 text-zinc-400 hover:text-zinc-700 transition-opacity"
-                            title="Copy full incident ID"
-                          >
-                            {copiedId === record.id ? (
-                              <Check className="h-3 w-3 text-emerald-600" />
-                            ) : (
-                              <Copy className="h-3 w-3" />
-                            )}
-                          </button>
-                        </div>
-                        <div className="font-semibold text-zinc-900 font-mono text-[11px] tracking-tight truncate">
-                          {record.attack_class}
-                        </div>
-                        <div className="text-[10px] text-zinc-400 font-mono">
-                          {record.timestamp.includes("T") ? record.timestamp.split("T")[1].slice(0, 8) : record.timestamp}
+                      {/* Column 1: Incident Vector (Single line) */}
+                      <TableCell className="overflow-hidden py-2 whitespace-nowrap">
+                        <div className="flex items-center gap-1.5 truncate">
+                          <span className="font-mono text-[10px] text-zinc-400 shrink-0">{shortId}</span>
+                          <span className="font-semibold text-zinc-900 text-xs truncate">{record.attack_class}</span>
                         </div>
                       </TableCell>
 
-                      {/* Column 2: Target Identity */}
-                      <TableCell className="overflow-hidden">
-                        <div className="flex items-center gap-1.5">
-                          <div className="h-5 w-5 rounded-full bg-zinc-100 text-zinc-700 border border-zinc-200 font-mono text-[9px] flex items-center justify-center shrink-0">
-                            {record.target_user_id.slice(2, 4).toUpperCase()}
+                      {/* Column 2: Target (Single line) */}
+                      <TableCell className="overflow-hidden py-2 whitespace-nowrap">
+                        <div className="flex items-center gap-1.5 truncate">
+                          <div className="h-5 w-5 rounded-full bg-zinc-100 text-zinc-700 border border-zinc-200 font-mono text-[9px] font-medium flex items-center justify-center shrink-0">
+                            {initials}
                           </div>
-                          <div className="truncate">
-                            <div className="font-medium text-zinc-800 text-[11px] truncate">
-                              {record.target_user_id}
-                            </div>
-                            <div className="text-[10px] text-zinc-400 truncate">
-                              {record.target_service}
-                            </div>
-                          </div>
+                          <span className="font-medium text-zinc-800 text-xs truncate">{displayName}</span>
                         </div>
                       </TableCell>
 
                       {/* Column 3: Tier */}
-                      <TableCell className="overflow-hidden">
+                      <TableCell className="overflow-hidden py-2 whitespace-nowrap">
                         {isTier1 && (
                           <Badge variant="outline" className="gap-1 bg-emerald-50/60 text-emerald-700 border-emerald-200 font-mono text-[10px] px-1.5 py-0.5">
                             <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
@@ -324,7 +320,7 @@ export function DecisionCenter({
                             Tier 2
                           </Badge>
                         )}
-                        {isTier3 && (
+                        {record.selected_tier === "TIER_3_PLAYBOOK" && (
                           <Badge variant="outline" className="gap-1 bg-blue-50/60 text-blue-700 border-blue-200 font-mono text-[10px] px-1.5 py-0.5">
                             <span className="h-1.5 w-1.5 rounded-full bg-blue-500" />
                             Tier 3
@@ -333,23 +329,28 @@ export function DecisionCenter({
                       </TableCell>
 
                       {/* Column 4: Threat % */}
-                      <TableCell className="text-right font-mono">
+                      <TableCell className="text-right font-mono py-2 whitespace-nowrap text-xs">
                         <span className={record.threat_confidence > 0.7 ? "font-bold text-red-600" : "text-zinc-700"}>
                           {(record.threat_confidence * 100).toFixed(0)}%
                         </span>
                       </TableCell>
 
                       {/* Column 5: Blast % */}
-                      <TableCell className="text-right font-mono">
+                      <TableCell className="text-right font-mono py-2 whitespace-nowrap text-xs">
                         <span className={record.blast_radius > 0.4 ? "font-bold text-amber-700" : "text-zinc-700"}>
                           {(record.blast_radius * 100).toFixed(0)}%
                         </span>
                       </TableCell>
 
-                      {/* Column 6: Resolution / Action */}
-                      <TableCell className="text-right overflow-hidden" onClick={(e) => e.stopPropagation()}>
+                      {/* Column 6: Time */}
+                      <TableCell className="text-right font-mono text-[11px] text-zinc-400 py-2 whitespace-nowrap">
+                        {timeFormatted}
+                      </TableCell>
+
+                      {/* Column 7: Resolution / Action */}
+                      <TableCell className="text-right overflow-hidden py-2 whitespace-nowrap" onClick={(e) => e.stopPropagation()}>
                         {isExecuted ? (
-                          <Badge variant="secondary" className="gap-1 bg-emerald-50 text-emerald-700 border-emerald-200 font-mono text-[10px]">
+                          <Badge variant="secondary" className="gap-1 bg-emerald-50 text-emerald-700 border-emerald-200 font-mono text-[10px] px-1.5 py-0.5">
                             <Check className="h-3 w-3" />
                             Mitigated
                           </Badge>
@@ -360,27 +361,28 @@ export function DecisionCenter({
                         ) : isTier2 ? (
                           canAct ? (
                             <Button
-                              size="sm"
+                              size="xs"
+                              variant="outline"
                               onClick={() => handleApprove(record.id)}
-                              className="h-6.5 text-[11px] font-medium px-2 shadow-2xs transition-all active:scale-95"
+                              className="h-6 text-[11px] font-medium px-2 bg-white hover:bg-zinc-100 text-zinc-900 border-zinc-200 shadow-2xs"
                             >
                               Authorize
                             </Button>
                           ) : (
                             <Tooltip>
                               <TooltipTrigger>
-                                <span className="inline-flex items-center text-[10px] text-zinc-400 border border-zinc-200 bg-zinc-50 px-1.5 py-0.5 rounded cursor-not-allowed gap-1 font-mono">
-                                  <Lock className="h-2.5 w-2.5" />
-                                  <span>{authorizedPersona?.title.split("(")[0].trim() || "CISO"}</span>
+                                <span className="inline-flex items-center text-[10px] text-zinc-600 border border-zinc-200 bg-zinc-50 px-1.5 py-0.5 rounded cursor-not-allowed gap-1 font-mono font-medium">
+                                  <Lock className="h-2.5 w-2.5 text-zinc-400" />
+                                  <span>{getShortRole(authorizedPersona)}</span>
                                 </span>
                               </TooltipTrigger>
                               <TooltipContent className="text-xs bg-zinc-800 text-white max-w-xs">
-                                Authority: Only {authorizedPersona?.name} holds execution authority for this asset scope.
+                                Requires {authorizedPersona?.name || "Executive"} sign-off
                               </TooltipContent>
                             </Tooltip>
                           )
                         ) : (
-                          <span className="text-[11px] font-mono text-blue-700 font-medium flex items-center justify-end gap-1">
+                          <span className="text-[11px] font-mono text-blue-700 font-medium inline-flex items-center gap-0.5">
                             <span>Playbook</span>
                             <ArrowUpRight className="h-3 w-3" />
                           </span>
@@ -395,111 +397,155 @@ export function DecisionCenter({
         </div>
       </div>
 
-      {/* RIGHT COLUMN: Incident Activity & Mitigation Timeline (~35% width) */}
-      <div className="lg:col-span-4 space-y-3.5">
-        <div className="space-y-1">
-          <div className="flex items-center gap-1.5 text-xs text-zinc-400">
-            <Clock className="h-3 w-3" />
-            <span>Real-Time Audit Stream</span>
-          </div>
-          <h2 className="text-base font-bold tracking-tight text-zinc-900">
-            Incident Activity & Timeline
-          </h2>
-          <p className="text-xs text-zinc-500">
-            Live containment actions and leadership sign-off audit records.
-          </p>
+      {/* RIGHT COLUMN: Streamlined Incident Inspector (~35% width, Sticky) */}
+      <div className="lg:col-span-4 sticky top-20 self-start space-y-2">
+        <div className="flex items-center justify-between text-xs font-medium text-zinc-500 px-0.5">
+          <span className="flex items-center gap-1.5">
+            <SlidersHorizontal className="h-3.5 w-3.5 text-zinc-400" />
+            <span>Incident Inspector</span>
+          </span>
+          {activeRecord && (
+            <div className="flex items-center gap-1 font-mono text-[10px] text-zinc-400">
+              <span>SEC-{activeRecord.id.slice(4, 9).toUpperCase()}</span>
+              <button
+                onClick={() => handleCopy(activeRecord.id, false)}
+                className="hover:text-zinc-700 p-0.5 rounded"
+                title="Copy incident ID"
+              >
+                {copiedId === activeRecord.id ? (
+                  <Check className="h-2.5 w-2.5 text-emerald-600" />
+                ) : (
+                  <Copy className="h-2.5 w-2.5" />
+                )}
+              </button>
+            </div>
+          )}
         </div>
 
-        {/* Informational Alert Banner */}
-        {pendingForMe.length > 0 && (
-          <div className="rounded-lg bg-amber-50/70 border border-amber-200/80 p-2.5 text-xs text-amber-900 space-y-1">
-            <div className="font-semibold flex items-center gap-1.5">
-              <Key className="h-3.5 w-3.5 text-amber-700" />
-              <span>{pendingForMe.length} Pending Governance Action{pendingForMe.length > 1 ? "s" : ""}</span>
-            </div>
-            <p className="text-[11px] text-amber-800 leading-snug">
-              Perimeter subnets are awaiting your 1-click authorization to enforce containment.
-            </p>
-          </div>
-        )}
-
-        {/* Selected Incident Detail Card (shadcn Card Primitive) */}
-        {activeRecord && (
+        {/* Selected Incident Detail Card */}
+        {activeRecord ? (
           <Card className="p-0 border-zinc-200/90 bg-white shadow-2xs">
-            <CardHeader className="p-3.5 pb-2.5 border-b border-zinc-100 flex flex-row items-center justify-between">
-              <div className="flex items-center gap-2">
-                <span className="h-2 w-2 rounded-full bg-emerald-500" />
-                <CardTitle className="font-semibold text-xs font-mono text-zinc-900">
+            <CardHeader className="p-3 pb-2 border-b border-zinc-100 flex flex-row items-center justify-between">
+              <div className="flex items-center gap-2 overflow-hidden">
+                <span
+                  className={`h-2 w-2 rounded-full shrink-0 ${
+                    activeRecord.selected_tier === "TIER_1_AUTOMATED"
+                      ? "bg-emerald-500"
+                      : activeRecord.selected_tier === "TIER_2_DRAFTED_HITL"
+                      ? "bg-amber-500"
+                      : "bg-blue-500"
+                  }`}
+                />
+                <CardTitle className="font-semibold text-xs text-zinc-900 truncate">
                   {activeRecord.attack_class}
                 </CardTitle>
               </div>
-              <span className="text-[10px] font-mono text-zinc-400">
-                SEC-{activeRecord.id.slice(4, 9).toUpperCase()}
-              </span>
+
+              {activeRecord.selected_tier === "TIER_1_AUTOMATED" && (
+                <Badge variant="outline" className="bg-emerald-50 text-emerald-700 border-emerald-200 text-[10px] font-mono">
+                  Tier 1
+                </Badge>
+              )}
+              {activeRecord.selected_tier === "TIER_2_DRAFTED_HITL" && (
+                <Badge variant="outline" className="bg-amber-50 text-amber-800 border-amber-200 text-[10px] font-mono">
+                  Tier 2
+                </Badge>
+              )}
+              {activeRecord.selected_tier === "TIER_3_PLAYBOOK" && (
+                <Badge variant="outline" className="bg-blue-50 text-blue-700 border-blue-200 text-[10px] font-mono">
+                  Tier 3
+                </Badge>
+              )}
             </CardHeader>
 
-            <CardContent className="p-3.5 space-y-2.5 text-xs">
+            <CardContent className="p-3 space-y-2 text-xs">
               {/* Target & Assigned Person */}
-              <div className="flex items-center justify-between py-1 border-b border-zinc-100/70 text-[11px]">
-                <span className="text-zinc-500">Target User:</span>
-                <span className="font-medium text-zinc-800 font-mono">{activeRecord.target_user_id}</span>
+              <div className="flex items-center justify-between py-1 border-b border-zinc-100 text-[11px]">
+                <span className="text-zinc-500">Target:</span>
+                <span className="font-medium text-zinc-800">
+                  {activeTargetPersona ? activeTargetPersona.name : activeRecord.target_user_id}
+                </span>
               </div>
 
-              <div className="flex items-center justify-between py-1 border-b border-zinc-100/70 text-[11px]">
-                <span className="text-zinc-500">Service Asset:</span>
-                <span className="font-medium text-zinc-800 font-mono">{activeRecord.target_service}</span>
+              <div className="flex items-center justify-between py-1 border-b border-zinc-100 text-[11px]">
+                <span className="text-zinc-500">Asset:</span>
+                <span className="font-medium text-zinc-800 font-mono text-[10px] truncate max-w-[200px]">
+                  {activeRecord.target_service}
+                </span>
               </div>
 
-              <div className="flex items-center justify-between py-1 border-b border-zinc-100/70 text-[11px]">
-                <span className="text-zinc-500">Threat / Blast:</span>
-                <span className="font-mono text-zinc-800">
+              <div className="flex items-center justify-between py-1 border-b border-zinc-100 text-[11px]">
+                <span className="text-zinc-500">Risk Profile:</span>
+                <span className="font-mono text-zinc-800 text-[11px]">
                   {(activeRecord.threat_confidence * 100).toFixed(0)}% Threat • {(activeRecord.blast_radius * 100).toFixed(0)}% Blast
                 </span>
               </div>
 
               {/* Rationale & Guardrail */}
               <div className="bg-zinc-50 rounded-lg p-2.5 text-zinc-700 text-[11px] leading-relaxed border border-zinc-200/60">
-                <strong className="text-zinc-900 block mb-0.5">Decision Rationale:</strong>
                 {activeRecord.reason}
               </div>
 
               {activeRecord.action_payload?.blast_radius_guardrail && (
                 <div className="bg-amber-50/60 rounded-lg p-2 text-amber-900 text-[11px] border border-amber-200/60">
-                  <strong>Guardrail: </strong>
+                  <span className="font-semibold">Guardrail: </span>
                   {activeRecord.action_payload.blast_radius_guardrail}
                 </div>
               )}
 
-              {/* Action Button inside Timeline Card */}
+              {/* Tier 1 Machine Autonomous Enforcement Receipt */}
+              {activeRecord.selected_tier === "TIER_1_AUTOMATED" && (
+                <div className="p-2 rounded-lg bg-zinc-50 border border-zinc-200/60 text-[11px] font-mono space-y-1">
+                  <div className="flex justify-between text-zinc-600">
+                    <span>Rule:</span>
+                    <span className="text-zinc-900 font-semibold">{activeRecord.action_payload?.execution_receipt?.rule_id || `AUTO-${activeRecord.id.slice(4, 9).toUpperCase()}`}</span>
+                  </div>
+                  <div className="flex justify-between text-zinc-600">
+                    <span>Enforcement:</span>
+                    <span className="text-zinc-900">{activeRecord.action_payload?.execution_receipt?.enforcement_point || "Edge WAF"}</span>
+                  </div>
+                  <div className="flex justify-between text-zinc-600">
+                    <span>Status:</span>
+                    <span className="text-emerald-700 font-semibold flex items-center gap-1">
+                      <Check className="h-3 w-3" /> Auto-Enforced
+                    </span>
+                  </div>
+                </div>
+              )}
+
+              {/* Tier 2 HITL 1-Click Mitigation Action */}
               {activeRecord.selected_tier === "TIER_2_DRAFTED_HITL" && (
-                <div className="pt-2">
+                <div className="pt-1">
                   {optimisticApproved.has(activeRecord.id) ||
+                  activeRecord.execution_status === "EXECUTED" ||
                   activeRecord.execution_status === "EXECUTED_BY_OPERATOR" ? (
-                    <div className="w-full text-center py-2 rounded-lg bg-emerald-50 text-emerald-700 text-xs font-medium border border-emerald-200 flex items-center justify-center gap-1.5">
-                      <Check className="h-4 w-4" />
-                      <span>Mitigation Authorized & Executed</span>
+                    <div className="w-full text-center py-1.5 rounded-lg bg-emerald-50 text-emerald-700 text-xs font-medium border border-emerald-200 flex items-center justify-center gap-1.5">
+                      <Check className="h-3.5 w-3.5" />
+                      <span>Mitigation Executed</span>
                     </div>
                   ) : activeRecord.can_act || activeRecord.authorized_persona_id === currentPersona.id ? (
                     <Button
+                      size="sm"
+                      variant="outline"
                       onClick={() => handleApprove(activeRecord.id)}
-                      className="w-full h-8 text-xs font-medium shadow-2xs transition-all active:scale-98"
+                      className="w-full h-8 text-xs font-semibold bg-zinc-100 hover:bg-zinc-200 text-zinc-900 border-zinc-300 shadow-2xs transition-all active:scale-[0.98]"
                     >
-                      Authorize 1-Click Mitigation
+                      Authorize Mitigation
                     </Button>
                   ) : (
-                    <div className="w-full text-center py-2 rounded-lg bg-zinc-50 text-zinc-500 text-xs border border-zinc-200 flex items-center justify-center gap-1.5">
-                      <Lock className="h-3.5 w-3.5 text-zinc-400" />
-                      <span>Requires {allPersonas.find((p) => p.id === activeRecord.authorized_persona_id)?.name || "CISO"} Authorization</span>
+                    <div className="w-full text-center py-1.5 rounded-lg bg-zinc-50 text-zinc-500 text-xs border border-zinc-200 flex items-center justify-center gap-1.5">
+                      <Lock className="h-3 w-3 text-zinc-400" />
+                      <span>Requires {allPersonas.find((p) => p.id === activeRecord.authorized_persona_id)?.name || "Executive"} Authorization</span>
                     </div>
                   )}
                 </div>
               )}
 
-              {/* Tier 3 Technical Playbook in Timeline Card */}
+              {/* Tier 3 Technical Playbook */}
               {activeRecord.selected_tier === "TIER_3_PLAYBOOK" && (
                 <div className="space-y-1.5 pt-1">
                   <div className="text-[10px] font-semibold uppercase tracking-wider text-zinc-400 font-mono">
-                    Mitigation Procedures:
+                    Procedures
                   </div>
                   <div className="space-y-1 text-[11px] font-mono">
                     {(activeRecord.action_payload?.technical_steps || [
@@ -536,51 +582,11 @@ export function DecisionCenter({
               )}
             </CardContent>
           </Card>
+        ) : (
+          <div className="rounded-xl border border-zinc-200/90 bg-white p-6 text-center text-xs text-zinc-400">
+            Select an incident to inspect.
+          </div>
         )}
-
-        {/* Activity Feed Summary List */}
-        <div className="space-y-2">
-          <div className="text-[10px] font-semibold uppercase tracking-wider text-zinc-400 font-mono">
-            Recent Mitigation Timeline
-          </div>
-          <div className="space-y-2">
-            {personaVisibleRecords.slice(0, 5).map((r) => {
-              const isExec = optimisticApproved.has(r.id) || r.execution_status.includes("EXECUTED");
-              const isPend = !isExec && r.execution_status === "AWAITING_APPROVAL";
-              return (
-                <div
-                  key={r.id}
-                  onClick={() => setSelectedIncidentId(r.id)}
-                  className={`p-2.5 rounded-lg border transition-all cursor-pointer text-xs ${
-                    activeRecord?.id === r.id
-                      ? "border-zinc-300 bg-white shadow-2xs"
-                      : "border-zinc-200/70 bg-white/70 hover:bg-white"
-                  }`}
-                >
-                  <div className="flex items-center justify-between font-mono text-[10px]">
-                    <span className="text-zinc-800 font-semibold">{r.attack_class}</span>
-                    <span className="text-zinc-400">
-                      {r.timestamp.includes("T") ? r.timestamp.split("T")[1].slice(0, 8) : r.timestamp}
-                    </span>
-                  </div>
-                  <div className="flex items-center justify-between mt-1 text-[11px]">
-                    <span className="text-zinc-500 font-mono">{r.target_user_id}</span>
-                    {isPend && (
-                      <span className="text-[9px] font-mono px-1.5 py-0.2 rounded bg-amber-100 text-amber-800 font-medium">
-                        Action Required
-                      </span>
-                    )}
-                    {isExec && (
-                      <span className="text-[9px] font-mono px-1.5 py-0.2 rounded bg-emerald-50 text-emerald-700 font-medium">
-                        Mitigated
-                      </span>
-                    )}
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        </div>
       </div>
     </div>
   );

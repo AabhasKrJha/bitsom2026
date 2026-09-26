@@ -55,8 +55,9 @@ export default function Home() {
 
     const executePoll = async () => {
       try {
+        const logsUser = currentPersonaId === "u_soc" ? undefined : currentPersonaId;
         const [logsData, auditData] = await Promise.all([
-          fetchLogs(100),
+          fetchLogs(100, logsUser),
           fetchAuditRecords(currentPersonaId),
         ]);
         if (active) {
@@ -86,9 +87,10 @@ export default function Home() {
   // Full Refresh Handler
   const handleRefresh = async () => {
     try {
+      const logsUser = currentPersonaId === "u_soc" ? undefined : currentPersonaId;
       const [topo, logsData, auditData] = await Promise.all([
         fetchTopology(),
-        fetchLogs(100),
+        fetchLogs(100, logsUser),
         fetchAuditRecords(currentPersonaId),
       ]);
       setTopology(topo);
@@ -106,8 +108,9 @@ export default function Home() {
   const handleApprove = async (auditId: string) => {
     try {
       await approveTier2Action(auditId, currentPersonaId);
+      const logsUser = currentPersonaId === "u_soc" ? undefined : currentPersonaId;
       const [logsData, auditData] = await Promise.all([
-        fetchLogs(100),
+        fetchLogs(100, logsUser),
         fetchAuditRecords(currentPersonaId),
       ]);
       setLogs(logsData.logs || []);

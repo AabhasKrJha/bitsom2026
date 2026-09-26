@@ -37,16 +37,12 @@ export function Navbar({
 
   return (
     <header className="h-14 border-b border-zinc-200/80 bg-white px-5 flex items-center justify-between sticky top-0 z-30 select-none">
-      {/* Left: Breadcrumb / Section Header */}
+      {/* Left: Section Header */}
       <div className="flex items-center gap-2 text-xs">
-        <span className="font-semibold text-zinc-900 font-mono tracking-tight">Sentix MDR</span>
-        <span className="text-zinc-300">/</span>
-        <span className="text-zinc-600 font-medium">{pageTitle}</span>
-
-        <span className="text-zinc-300 ml-2">•</span>
-
-        <span className="text-zinc-500 font-mono text-[11px]">
-          {totalLogs.toLocaleString()} events ({totalAudits} incidents evaluated)
+        <span className="font-semibold text-zinc-900">{pageTitle}</span>
+        <span className="text-zinc-300 ml-1.5">•</span>
+        <span className="text-zinc-400 font-mono text-[11px]">
+          {totalAudits} incidents • {totalLogs.toLocaleString()} events
         </span>
       </div>
 
