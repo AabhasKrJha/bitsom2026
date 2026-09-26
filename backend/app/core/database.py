@@ -1,40 +1,54 @@
 """Database schema, connection manager, and topology initialization for Sentix.
 
-Maintains topology entities (users, infrastructure, client devices, subnets)
-and an empty raw logs table. If sentix.db is ever deleted, running this file
-directly restores the database to its pristine initial state in milliseconds.
+Maintains topology entities (users, infrastructure, client devices, subnets),
+an empty raw logs table, and an audit ledger table for recorded decisions.
 """
 
-import os
+import json
 import sqlite3
-from typing import List, Dict, Any, Optional
+import sys
+from pathlib import Path
+from typing import Dict, Any, Optional, List
 
-DB_PATH = os.path.join(os.path.dirname(__file__), "sentix.db")
+# Auto-inject project root and backend dir into sys.path
+_CORE_DIR = Path(__file__).resolve().parent
+_BACKEND_DIR = _CORE_DIR.parent.parent
+_ROOT_DIR = _BACKEND_DIR.parent
+
+for _p in (str(_ROOT_DIR), str(_BACKEND_DIR)):
+    if _p not in sys.path:
+        sys.path.insert(0, _p)
+
+try:
+    from backend.app.core.config import DB_PATH
+except ImportError:
+    from app.core.config import DB_PATH
 
 
 def get_db_connection() -> sqlite3.Connection:
     """Returns a connection to the SQLite database with row factory enabled."""
-    conn = sqlite3.connect(DB_PATH)
+    conn = sqlite3.connect(str(DB_PATH))
     conn.row_factory = sqlite3.Row
     return conn
 
 
-def init_db(reset: bool = False):
-    """Initializes the database schema and seeds static topology entities only.
+def init_db(reset: bool = False, seed_static_entities: bool = True):
+    """Initializes the database schema and seeds static topology entities.
     
     If reset is True, drops existing tables to guarantee a clean slate.
+    The logs and audit_ledger tables are always initialized in an empty state.
     """
     conn = get_db_connection()
     cursor = conn.cursor()
 
     if reset:
+        cursor.execute("DROP TABLE IF EXISTS audit_ledger;")
         cursor.execute("DROP TABLE IF EXISTS logs;")
         cursor.execute("DROP TABLE IF EXISTS users;")
         cursor.execute("DROP TABLE IF EXISTS infrastructure_nodes;")
         cursor.execute("DROP TABLE IF EXISTS client_devices;")
         cursor.execute("DROP TABLE IF EXISTS network_subnets;")
         cursor.execute("DROP TABLE IF EXISTS decisions;")
-        cursor.execute("DROP TABLE IF EXISTS audit_ledger;")
 
     # 1. Cybersecurity Personas (Stakeholders)
     cursor.execute("""
@@ -109,11 +123,41 @@ def init_db(reset: bool = False):
     cursor.execute("CREATE INDEX IF NOT EXISTS idx_logs_timestamp ON logs(timestamp);")
     cursor.execute("CREATE INDEX IF NOT EXISTS idx_logs_source ON logs(source_system);")
 
-    # Seed static topology entities
-    _seed_topology(cursor)
+    # 6. Audit Ledger Table (DECISION RECEIPTS & EXPLAINABILITY)
+    cursor.execute("""
+    CREATE TABLE IF NOT EXISTS audit_ledger (
+        id TEXT PRIMARY KEY,                       -- e.g. 'aud_20260926_0001'
+        timestamp DATETIME NOT NULL,               -- UTC timestamp of decision
+        log_id TEXT NOT NULL,                      -- Foreign key to logs(id)
+        target_user_id TEXT NOT NULL,              -- Target persona (e.g. 'u_ciso')
+        target_service TEXT NOT NULL,              -- Target asset (e.g. 'SAP S/4HANA')
+        attack_class TEXT NOT NULL,                -- e.g. 'EXECUTIVE_CREDENTIAL_STUFFING'
+        selected_tier TEXT NOT NULL,               -- 'TIER_1_AUTOMATED', 'TIER_2_DRAFTED_HITL', 'TIER_3_PLAYBOOK'
+        execution_status TEXT NOT NULL,            -- 'EXECUTED', 'AWAITING_APPROVAL', 'ADVISORY_PENDING'
+        authorized_persona_id TEXT,                -- Who holds the button for Tier 2 (e.g. 'u_ciso')
+        threat_confidence REAL NOT NULL,           -- Float from Jev (0.0 to 1.0)
+        blast_radius REAL NOT NULL,                -- Float from Jev (0.0 to 1.0)
+        reason TEXT NOT NULL,                      -- Plain English explainability rationale
+        action_payload JSON NOT NULL,              -- Full action receipt / button spec / playbook steps
+        jev_raw_evaluation JSON NOT NULL,          -- Complete typed Jev response for compliance
+        FOREIGN KEY (log_id) REFERENCES logs(id),
+        FOREIGN KEY (target_user_id) REFERENCES users(id)
+    );
+    """)
 
-    # Ensure logs table is completely clean
+    # High-Performance Indexes for audit_ledger
+    cursor.execute("CREATE INDEX IF NOT EXISTS idx_audit_tier ON audit_ledger(selected_tier);")
+    cursor.execute("CREATE INDEX IF NOT EXISTS idx_audit_status ON audit_ledger(execution_status);")
+    cursor.execute("CREATE INDEX IF NOT EXISTS idx_audit_time ON audit_ledger(timestamp);")
+    cursor.execute("CREATE INDEX IF NOT EXISTS idx_audit_persona ON audit_ledger(authorized_persona_id);")
+
+    # Seed static topology entities
+    if seed_static_entities:
+        _seed_topology(cursor)
+
+    # Ensure dynamic tables are completely clean
     cursor.execute("DELETE FROM logs;")
+    cursor.execute("DELETE FROM audit_ledger;")
 
     conn.commit()
     conn.close()
@@ -180,11 +224,111 @@ def _seed_topology(cursor: sqlite3.Cursor):
     """, subnets)
 
 
+def save_audit_record(audit_data: Dict[str, Any]) -> str:
+    """Inserts a decision audit record into the audit_ledger table."""
+    conn = get_db_connection()
+    cursor = conn.cursor()
+
+    action_payload_json = json.dumps(audit_data.get("action_payload", {}))
+    jev_raw_json = json.dumps(audit_data.get("jev_raw_evaluation", {}))
+
+    cursor.execute("""
+    INSERT INTO audit_ledger (
+        id, timestamp, log_id, target_user_id, target_service,
+        attack_class, selected_tier, execution_status, authorized_persona_id,
+        threat_confidence, blast_radius, reason, action_payload, jev_raw_evaluation
+    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+    """, (
+        audit_data["id"],
+        audit_data["timestamp"],
+        audit_data["log_id"],
+        audit_data["target_user_id"],
+        audit_data.get("target_service", "Unknown Asset"),
+        audit_data["attack_class"],
+        audit_data["selected_tier"],
+        audit_data["execution_status"],
+        audit_data.get("authorized_persona_id"),
+        audit_data["threat_confidence"],
+        audit_data["blast_radius"],
+        audit_data["reason"],
+        action_payload_json,
+        jev_raw_json,
+    ))
+    conn.commit()
+    conn.close()
+    return audit_data["id"]
+
+
+def get_audit_records(
+    limit: int = 50,
+    persona_id: Optional[str] = None,
+    tier: Optional[str] = None
+) -> List[Dict[str, Any]]:
+    """Fetches audit ledger records from SQLite, with optional filters."""
+    conn = get_db_connection()
+    cursor = conn.cursor()
+
+    query = "SELECT * FROM audit_ledger WHERE 1=1"
+    params = []
+
+    if tier:
+        query += " AND selected_tier = ?"
+        params.append(tier)
+
+    query += " ORDER BY timestamp DESC LIMIT ?"
+    params.append(limit)
+
+    cursor.execute(query, params)
+    rows = []
+    for r in cursor.fetchall():
+        item = dict(r)
+        if isinstance(item.get("action_payload"), str):
+            try:
+                item["action_payload"] = json.loads(item["action_payload"])
+            except Exception:
+                pass
+        if isinstance(item.get("jev_raw_evaluation"), str):
+            try:
+                item["jev_raw_evaluation"] = json.loads(item["jev_raw_evaluation"])
+            except Exception:
+                pass
+        
+        # Calculate persona actionability flag
+        if persona_id:
+            item["can_act"] = (
+                item["selected_tier"] == "TIER_2_DRAFTED_HITL"
+                and item["execution_status"] == "AWAITING_APPROVAL"
+                and item.get("authorized_persona_id") == persona_id
+            )
+        else:
+            item["can_act"] = False
+
+        rows.append(item)
+
+    conn.close()
+    return rows
+
+
+def update_audit_status(audit_id: str, new_status: str, actor_id: str) -> bool:
+    """Updates the execution status of an audit record (e.g. when 1-click button is approved)."""
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute("""
+    UPDATE audit_ledger
+    SET execution_status = ?
+    WHERE id = ? AND authorized_persona_id = ?;
+    """, (new_status, audit_id, actor_id))
+    rows_affected = cursor.rowcount
+    conn.commit()
+    conn.close()
+    return rows_affected > 0
+
+
 def get_db_summary() -> Dict[str, int]:
     """Returns row counts for all tables currently in the database."""
     conn = get_db_connection()
     cursor = conn.cursor()
-    cursor.execute("SELECT name FROM sqlite_master WHERE type='table';")
+    cursor.execute("SELECT name FROM sqlite_master WHERE type='table' AND name NOT LIKE 'sqlite_%';")
     tables = [r[0] for r in cursor.fetchall()]
     counts = {}
     for t in tables:

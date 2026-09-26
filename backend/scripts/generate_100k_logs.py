@@ -1,22 +1,36 @@
 """Generates 100,000 streamable enterprise logs into JSONL format with 6 distinct attack classes.
 
 Initializes sentix.db with topology entities (users, infrastructure, client devices, subnets)
-while keeping the live logs and decisions tables 100% empty for live demo ingestion.
+while keeping the live logs table 100% empty for live demo ingestion.
 """
 
 import os
+import sys
 import json
 import random
 import time
+from pathlib import Path
 from datetime import datetime, timezone, timedelta
-from backend.database import init_db, get_db_summary
+
+# Automatically inject project root and backend dir into sys.path
+CURRENT_FILE = Path(__file__).resolve()
+SCRIPTS_DIR = CURRENT_FILE.parent
+BACKEND_DIR = SCRIPTS_DIR.parent
+PROJECT_ROOT = BACKEND_DIR.parent
+
+for p in (str(PROJECT_ROOT), str(BACKEND_DIR)):
+    if p not in sys.path:
+        sys.path.insert(0, p)
+
+try:
+    from backend.app.core.config import JSONL_LOGS_PATH, SAMPLE_SCENARIOS_PATH, DATA_EXPORTS_DIR
+    from backend.app.core.database import init_db, get_db_summary
+except ImportError:
+    from app.core.config import JSONL_LOGS_PATH, SAMPLE_SCENARIOS_PATH, DATA_EXPORTS_DIR
+    from app.core.database import init_db, get_db_summary
 
 # Fixed Seed for Reproducible Consistency
 random.seed(42)
-
-EXPORTS_DIR = os.path.join(os.path.dirname(__file__), "data_exports")
-JSONL_PATH = os.path.join(EXPORTS_DIR, "enterprise_logs_100k.jsonl")
-SAMPLE_SCENARIOS_PATH = os.path.join(EXPORTS_DIR, "attack_scenarios_sample.json")
 
 PERSONA_IDS = ["u_ciso", "u_cto", "u_devops", "u_soc", "u_eng"]
 
@@ -30,13 +44,13 @@ SUBNETS = {
 
 
 def generate_100k_logs_file():
-    os.makedirs(EXPORTS_DIR, exist_ok=True)
-    
-    # 1. Reset DB topology & ensure live logs table is EMPTY
-    print("[*] Initializing sentix.db with clean topology entities (logs/decisions empty)...")
-    init_db(seed_static_entities=True)
+    os.makedirs(str(DATA_EXPORTS_DIR), exist_ok=True)
 
-    print(f"[*] Generating 100,000 streamable enterprise logs to {JSONL_PATH}...")
+    # 1. Reset DB topology & ensure live logs table is EMPTY
+    print("[*] Initializing sentix.db with clean topology entities (logs empty)...")
+    init_db(reset=True, seed_static_entities=True)
+
+    print(f"[*] Generating 100,000 streamable enterprise logs to {JSONL_LOGS_PATH}...")
     start_time = time.time()
 
     end_dt = datetime.now(timezone.utc)
@@ -47,7 +61,6 @@ def generate_100k_logs_file():
     curated_scenarios = {}
 
     # Class 1: Executive Credential Stuffing (Target: Elena Rostova / CISO)
-    # 52 rapid brute force attempts within 45s from Partner Gateway
     cluster_a = []
     cluster_a_base = start_dt + timedelta(hours=3, minutes=18)
     for seq in range(1, 53):
@@ -75,7 +88,6 @@ def generate_100k_logs_file():
     curated_scenarios["class_1_executive_credential_stuffing"] = cluster_a
 
     # Class 2: High-Privilege DB AssumeRole Probe (Target: David Kim / CTO)
-    # 18 failed assume-role attempts from offshore datacenter
     cluster_b = []
     cluster_b_base = start_dt + timedelta(hours=23, minutes=45)
     for seq in range(1, 19):
@@ -101,7 +113,6 @@ def generate_100k_logs_file():
     curated_scenarios["class_2_privileged_db_assume_role"] = cluster_b
 
     # Class 3: Internal Lateral Token Introspection (Target: Marcus Vance / DevOps Lead)
-    # 25 lateral introspection probes across internal microservices
     cluster_c = []
     cluster_c_base = start_dt + timedelta(hours=8, minutes=14)
     for seq in range(1, 26):
@@ -150,7 +161,6 @@ def generate_100k_logs_file():
     curated_scenarios["class_4_developer_secret_leak"] = cluster_d
 
     # Class 5: Impossible Travel Anomaly (Target: Sarah Jenkins / SOC Lead)
-    # Login NY at 10:00, Login SG at 10:14
     cluster_e = [
         {
             "id": "log_soc_travel_001",
@@ -211,7 +221,7 @@ def generate_100k_logs_file():
         all_attack_events.extend(ev_list)
 
     # Save Curated Attack Scenarios Sample File for reference
-    with open(SAMPLE_SCENARIOS_PATH, "w") as f:
+    with open(str(SAMPLE_SCENARIOS_PATH), "w", encoding="utf-8") as f:
         json.dump(curated_scenarios, f, indent=2)
     print(f"[✓] Saved curated attack scenarios sample to {SAMPLE_SCENARIOS_PATH}")
 
@@ -226,7 +236,7 @@ def generate_100k_logs_file():
         ("GitHub Enterprise", "git.push", "HOME_ISP"),
     ]
 
-    with open(JSONL_PATH, "w") as f:
+    with open(str(JSONL_LOGS_PATH), "w", encoding="utf-8") as f:
         # Write curated attack logs first
         for item in all_attack_events:
             f.write(json.dumps(item) + "\n")
@@ -235,7 +245,6 @@ def generate_100k_logs_file():
         for i in range(baseline_target):
             offset_sec = random.randint(0, total_seconds)
             ts = start_dt + timedelta(seconds=offset_sec)
-            hour = ts.hour
 
             user_id = random.choice(PERSONA_IDS)
             src_sys, ev_type, def_subnet = random.choice(systems)
@@ -281,12 +290,12 @@ def generate_100k_logs_file():
             f.write(json.dumps(row) + "\n")
 
     elapsed = time.time() - start_time
-    file_size_mb = os.path.getsize(JSONL_PATH) / (1024 * 1024)
-    print(f"[✓] Generated 100,000 logs in {elapsed:.2f}s ({file_size_mb:.1f} MB JSONL at {JSONL_PATH})")
+    file_size_mb = os.path.getsize(str(JSONL_LOGS_PATH)) / (1024 * 1024)
+    print(f"[✓] Generated 100,000 logs in {elapsed:.2f}s ({file_size_mb:.1f} MB JSONL at {JSONL_LOGS_PATH})")
 
     # 4. Final DB Status Verification
     summary = get_db_summary()
-    print("\n[+] Database State (Topology Seeded, Execution Tables EMPTY):")
+    print("\n[+] Database State (Topology Seeded, Logs EMPTY):")
     for tbl, cnt in summary.items():
         print(f"    • {tbl}: {cnt} rows")
 

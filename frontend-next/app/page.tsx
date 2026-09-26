@@ -1,69 +1,194 @@
-import Image from "next/image";
+"use client";
+
+import React, { useState, useEffect } from "react";
+import {
+  fetchTopology,
+  fetchLogs,
+  fetchAuditRecords,
+  approveTier2Action,
+} from "@/lib/api";
+import {
+  TopologyData,
+  UserPersona,
+  LogEvent,
+  AuditRecord,
+} from "@/lib/types";
+import { Sidebar } from "@/components/sidebar";
+import { Navbar } from "@/components/navbar";
+import { DecisionCenter } from "@/components/decision-center";
+import { LiveTelemetryFeed } from "@/components/live-telemetry-feed";
+import { TopologyView } from "@/components/topology-view";
 
 export default function Home() {
+  const [topology, setTopology] = useState<TopologyData | null>(null);
+  const [personas, setPersonas] = useState<UserPersona[]>([]);
+  const [currentPersonaId, setCurrentPersonaId] = useState<string>("u_ciso");
+  const [logs, setLogs] = useState<LogEvent[]>([]);
+  const [auditRecords, setAuditRecords] = useState<AuditRecord[]>([]);
+  const [activeTab, setActiveTab] = useState<"decisions" | "telemetry" | "topology">("decisions");
+  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState<boolean>(false);
+
+  // Load Initial Topology
+  useEffect(() => {
+    let active = true;
+    fetchTopology()
+      .then((topo) => {
+        if (active) {
+          setTopology(topo);
+          if (topo.users && topo.users.length > 0) {
+            setPersonas(topo.users);
+          }
+        }
+      })
+      .catch((err) => {
+        console.error("Failed to load initial topology:", err);
+      });
+
+    return () => {
+      active = false;
+    };
+  }, []);
+
+  // Polling loop (every 1.5 seconds)
+  useEffect(() => {
+    let active = true;
+
+    const executePoll = async () => {
+      try {
+        const [logsData, auditData] = await Promise.all([
+          fetchLogs(100),
+          fetchAuditRecords(currentPersonaId),
+        ]);
+        if (active) {
+          setLogs(logsData.logs || []);
+          setAuditRecords(auditData.records || []);
+        }
+      } catch (err) {
+        console.error("Telemetry polling error:", err);
+      }
+    };
+
+    const initialTimer = setTimeout(executePoll, 0);
+    const interval = setInterval(executePoll, 1500);
+
+    return () => {
+      active = false;
+      clearTimeout(initialTimer);
+      clearInterval(interval);
+    };
+  }, [currentPersonaId]);
+
+  // Persona change handler
+  const handleSelectPersona = (newPersonaId: string) => {
+    setCurrentPersonaId(newPersonaId);
+  };
+
+  // Full Refresh Handler
+  const handleRefresh = async () => {
+    try {
+      const [topo, logsData, auditData] = await Promise.all([
+        fetchTopology(),
+        fetchLogs(100),
+        fetchAuditRecords(currentPersonaId),
+      ]);
+      setTopology(topo);
+      if (topo.users && topo.users.length > 0) {
+        setPersonas(topo.users);
+      }
+      setLogs(logsData.logs || []);
+      setAuditRecords(auditData.records || []);
+    } catch (err) {
+      console.error("Refresh error:", err);
+    }
+  };
+
+  // Tier 2 1-Click Approval Handler
+  const handleApprove = async (auditId: string) => {
+    try {
+      await approveTier2Action(auditId, currentPersonaId);
+      const [logsData, auditData] = await Promise.all([
+        fetchLogs(100),
+        fetchAuditRecords(currentPersonaId),
+      ]);
+      setLogs(logsData.logs || []);
+      setAuditRecords(auditData.records || []);
+    } catch (err: unknown) {
+      const msg = err instanceof Error ? err.message : String(err);
+      alert(`Approval error: ${msg}`);
+    }
+  };
+
+  const currentPersona = personas.find((p) => p.id === currentPersonaId) || {
+    id: "u_ciso",
+    name: "Elena Rostova",
+    email: "elena.rostova@enterprise.internal",
+    title: "Chief Information Security Officer (CISO)",
+    role_category: "EXECUTIVE",
+    department: "Information Security & Governance",
+    asset_scope: "Enterprise Identity & Okta IAM",
+    avatar_initials: "ER",
+  };
+
+  const pendingForMeCount = auditRecords.filter(
+    (r) =>
+      r.selected_tier === "TIER_2_DRAFTED_HITL" &&
+      r.execution_status === "AWAITING_APPROVAL" &&
+      (r.can_act || r.authorized_persona_id === currentPersonaId)
+  ).length;
+
+  const pageTitleMap = {
+    decisions: "Autonomous Decision Center",
+    telemetry: "Live Telemetry Feed",
+    topology: "Enterprise Topology & Asset Scope",
+  };
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert h-5 w-[100px]"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
+    <div className="min-h-screen flex bg-zinc-50/40 text-zinc-900">
+      {/* TypeSafe-Style Fixed Left Sidebar with Bottom Account Switcher */}
+      <Sidebar
+        currentTab={activeTab}
+        onSelectTab={setActiveTab}
+        personas={personas}
+        currentPersonaId={currentPersonaId}
+        onSelectPersona={handleSelectPersona}
+        pendingApprovalsForMeCount={pendingForMeCount}
+        totalAuditsCount={auditRecords.length}
+        totalLogsCount={topology?.total_logs_stored || logs.length}
+        isCollapsed={isSidebarCollapsed}
+        onToggleCollapse={() => setIsSidebarCollapsed((prev) => !prev)}
+      />
+
+      {/* Main Content Area */}
+      <div className="flex-1 flex flex-col min-w-0">
+        <Navbar
+          pageTitle={pageTitleMap[activeTab]}
+          totalLogs={topology?.total_logs_stored || logs.length}
+          totalAudits={auditRecords.length}
+          onRefresh={handleRefresh}
         />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the{" "}
-            <code className="rounded bg-black/[.06] px-1.5 py-0.5 font-mono text-[0.9em] dark:bg-white/[.08]">
-              page.tsx
-            </code>{" "}
-            file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert h-[14px] w-4"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={14}
+
+        <main className="flex-1 p-6 space-y-4 w-full max-w-[1600px] mx-auto">
+          {activeTab === "decisions" && (
+            <DecisionCenter
+              records={auditRecords}
+              currentPersona={currentPersona}
+              allPersonas={personas}
+              onApprove={handleApprove}
             />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
+          )}
+
+          {activeTab === "telemetry" && (
+            <LiveTelemetryFeed
+              logs={logs}
+              totalLogsStored={topology?.total_logs_stored || logs.length}
+            />
+          )}
+
+          {activeTab === "topology" && (
+            <TopologyView topology={topology} />
+          )}
+        </main>
+      </div>
     </div>
   );
 }
